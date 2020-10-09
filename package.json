@@ -1,0 +1,80 @@
+{
+  "name": "@mobilabs/pulsar",
+  "version": "1.0.0-beta.1",
+  "description": "A boilerplate to build complex Web Apps relying on Pakket",
+  "main": "",
+  "bin": {
+    "pixarpulsar": "./bin/pixarpulsar.js"
+  },
+  "scripts": {
+    "create": "node tasks/create.js",
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "dev": "gulp rundev",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
+    "display-coverage": "opener ./coverage/lcov-report/index.html",
+    "check-coverage": "nyc check-coverage --statements 20 --branches 0 --functions 0 --lines 20",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "report": "nyc report",
+    "makedist": "gulp makedist",
+    "app": "gulp runapp",
+    "doc": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jclo/pulsar.git"
+  },
+  "keywords": [
+    "ES6"
+  ],
+  "author": {
+    "name": "Mobilabs",
+    "email": "contact@mobilabs.fr",
+    "url": "http://www.mobilabs.fr"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jclo/pulsar/issues"
+  },
+  "homepage": "https://github.com/jclo/pulsar",
+  "dependencies": {
+    "@mobilabs/kasar": "^1.0.2",
+    "nopt": "^5.0.0",
+    "shelljs": "^0.8.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
+    "cross-env": "^7.0.2",
+    "del": "^6.0.0",
+    "eslint": "^7.10.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "esm": "^3.2.25",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-header": "^2.0.9",
+    "gulp-rename": "^2.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify-es": "^2.0.0",
+    "html5-boilerplate": "^8.0.0",
+    "husky": "^4.3.0",
+    "mocha": "^8.1.3",
+    "nyc": "^15.1.0",
+    "open": "^7.3.0",
+    "opener": "^1.5.2",
+    "pakket": "^1.0.1",
+    "@mobilabs/es6pakket": "1.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run makedist && npm run test && npm run check-coverage && npm run report"
+    }
+  }
+}
