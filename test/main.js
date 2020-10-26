@@ -4,12 +4,13 @@
 
 
 // -- Vendor Modules
+const { JSDOM } = require('jsdom')
+    , fetch     = require('node-fetch')
+    ;
 
 
 // -- Local Modules
-const // Pulsar = require('../index')
-    Pulsar     = require('../public/src/main').default
-    // , pack    = require('../package.json')
+const pack    = require('../package.json')
     , testlib = require('./int/lib')
     ;
 
@@ -22,6 +23,26 @@ const // Pulsar = require('../index')
 
 
 // -- Main
+
+// Create a Virtual DOM:
+const HTML = `
+  <!DOCTYPE html>
+  <html>
+    <head></head>
+    <body>
+      <div id="app"></div>
+    </body>
+  </html>
+`;
+const dom = new JSDOM(HTML);
+global.window = dom.window;
+global.document = dom.window.document;
+global.navigator = { userAgent: 'node.js' };
+global.fetch = fetch;
+
+// Pixi must be defined after the virtual DOM is declared otherwise it fails
+// because it can't recognize the DOM global variables.
+const Pulsar = require('../public/src/main').default;
 
 // Nota:
 // If you choose 'Pulsar = require('../index')', 'display-coverage' will

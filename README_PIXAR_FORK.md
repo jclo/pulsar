@@ -162,4 +162,92 @@ Then, remove the package `kadoo` and add the package `pakket`.
 
 And finally, replace `README.md` and `CHANGELOG.md` files by `Pulsar` ones.
 
-That'is all!
+
+## Update Pulsar
+
+`Pixar` is shipped with a very basic app but `Pulsar` is delivered by a more complex app built with `@mobilabs/rview`. From the fork of `Pixar`, you must add the folder:
+
+  * public/src/app from the old version of `Pulsar`.
+
+And modify `src/main.js` like this:
+
+```javascript
+function Pulsar() {
+  Worker.start(sw, (err, msg) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(msg);
+    }
+
+    // Starts the App
+    App.show();
+  });
+}
+
+// Attaches a constant to Pulsar that provides the version of the lib.
+Pulsar.VERSION = '{{lib:version}}';
+
+
+// -- Starts the App
+Pulsar();
+
+
+// -- Export
+export default Pulsar;
+```
+
+And `public/index.html` like that:
+
+```html
+<!-- Add your site or application content here -->
+<div id="app" class="container">
+  <!-- Everything will fit here: header, main section, footer -->
+</div><!-- /.container -->
+```
+
+and
+
+```html
+<!-- Add your scripts here -->
+<script type="module">
+  import Pixar from './js/wapp.mjs';
+</script>
+```
+
+### Update package.json
+
+Add the following NPM modules:
+
+  * dependencies: @mobilabs/rview,
+  * devDendencies: jsdom, node-fetch
+
+
+### Update test/main.js
+
+Add a virtual DOM:
+
+```javascript
+// Create a Virtual DOM:
+const HTML = `
+  <!DOCTYPE html>
+  <html>
+    <head></head>
+    <body>
+      <div id="app"></div>
+    </body>
+  </html>
+`;
+const dom = new JSDOM(HTML);
+global.window = dom.window;
+global.document = dom.window.document;
+global.navigator = { userAgent: 'node.js' };
+global.fetch = fetch;
+
+// Pixi must be defined after the virtual DOM is declared otherwise it fails
+// because it can't recognize the DOM global variables.
+const Pulsar = require('../public/src/main').default;
+```
+
+
+That's all!

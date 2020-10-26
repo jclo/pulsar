@@ -28,6 +28,7 @@
 
 // -- Local Modules
 import Worker from './worker/main';
+import App from './app/main';
 
 
 // -- Local Constants
@@ -55,11 +56,18 @@ function Pulsar() {
     } else {
       console.log(msg);
     }
+
+    // Starts the App
+    App.show();
   });
 }
 
 // Attaches a constant to Pulsar that provides the version of the lib.
 Pulsar.VERSION = '{{lib:version}}';
+
+
+// -- Starts the App
+Pulsar();
 
 
 // -- Export

@@ -69,7 +69,7 @@ module.exports = {
     // From vendor:
     // example: './node_modules/font-awesome/css/font-awesome.css',
     // From project:
-    './public/src/css/app.css',
+    './public/src/app/components/app/app.css',
   ],
 
   fonts: [
