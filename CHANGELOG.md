@@ -5,4 +5,5 @@
   * First build,
   * First release candidate,
   * Replaced Pixar simple App by an App based on @RView,
+  * Second release candidate,
   * ...,
