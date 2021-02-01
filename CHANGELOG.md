@@ -7,4 +7,5 @@
   * Replaced Pixar simple App by an App based on @RView,
   * Second release candidate,
   * Updated the project dependencies,
+  * Third release candidate,
   * ...,
