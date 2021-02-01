@@ -1,9 +1,10 @@
 ### HEAD
 
-### 1.0.0 (October 26, 2020)
+### 1.0.0 (February 1, 2021)
 
   * First build,
   * First release candidate,
   * Replaced Pixar simple App by an App based on @RView,
   * Second release candidate,
+  * Updated the project dependencies,
   * ...,

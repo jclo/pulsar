@@ -83,9 +83,9 @@ const App = RView.Component({
     return `
       <div>
         <p style="text-align: center; padding-top: 100px;">
-        Hello world! This is Pulsar Boilerplate.<br />
-        <span class="pixar" style="font-size:0.9em;font-style:italic">${props.hello}</span>
-      </p>
+          Hello world! This is Pulsar Boilerplate.<br />
+          <span class="pixar" style="font-size:0.9em;font-style:italic">${props.hello}</span>
+        </p>
       </div>
     `;
   },
