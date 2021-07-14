@@ -9,4 +9,5 @@
   * Updated the project dependencies,
   * Third release candidate,
   * Updated the project dependencies,
+  * Fourth release candidate,
   * ...,
