@@ -10,13 +10,13 @@ const { JSDOM } = require('jsdom')
 
 
 // -- Local Modules
-const pack    = require('../package.json')
-    , testlib = require('./int/lib')
+const testlib = require('./int/lib')
+    , pack    = require('../package.json')
     ;
 
 
 // -- Local Constants
-// const libname = 'Pulsar';
+const libname = 'Pulsar';
 
 
 // -- Local Variables
@@ -40,18 +40,19 @@ global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
 global.fetch = fetch;
 
-// Pixi must be defined after the virtual DOM is declared otherwise it fails
-// because it can't recognize the DOM global variables.
-const Pulsar = require('../public/src/main').default;
-
 // Nota:
-// If you choose 'Pulsar = require('../index')', 'display-coverage' will
-// show the coverage of all the library in one file.
+// If you want that 'display-coverage' shows the coverage files by files,
+// you should set 'Pulsar' and 'testlib' like this:
+//  . const Pulsar = require('../src/<file>').default;
+//  . testlib(Pulsar, '{{lib:name}}', '{{lib:version}}', 'without new');
 //
-// If you want to display the coverage file by file, you must choose
-// 'Pulsar = require('../src/prototypal').default'. But, in this case,
-// the build isn't done, so you should pass '{{lib:name}}' as libname and
-// '{{lib:version}}' as the library version.
+// But, if you want that 'display-coverage' shows the coverage in one file,
+// you should set 'Pulsar' and 'testlib' like this:
+//  . const Pulsar = require('../index');
+//  . testlib(Pulsar, libname, pack.version, 'without new');
+
+const Pulsar = require('../public/src/main').default;
+// const Pulsar = require('../index');
 
 describe('Test Pulsar:', () => {
   testlib(Pulsar, '{{lib:name}}', '{{lib:version}}', 'without new');

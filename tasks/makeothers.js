@@ -15,10 +15,10 @@ const config = require('./config')
 
 
 // -- Local Constants
-const { root }       = config
-    , { fonts }      = config
-    , { icons }      = config
-    , { img }        = config
+const { root }  = config
+    , { fonts } = config
+    , { icons } = config
+    , { img }   = config
     ;
 
 

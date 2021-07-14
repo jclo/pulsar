@@ -135,7 +135,7 @@ Enjoy!
 [npm-url]: https://www.npmjs.com/package/@mobilabs/pulsar
 [release-url]: https://github.com/jclo/pulsar/tags
 [commit-url]: https://github.com/jclo/pulsar/commits/master
-[travis-url]: https://travis-ci.org/jclo/pulsar
+[travis-url]: https://travis-ci.com/jclo/pulsar
 [coveralls-url]: https://coveralls.io/github/jclo/pulsar?branch=master
 [dependencies-url]: https://david-dm.org/jclo/pulsar
 [devdependencies-url]: https://david-dm.org/jclo/pulsar?type=dev
