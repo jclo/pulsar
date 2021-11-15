@@ -40,7 +40,7 @@ function clean(done) {
 
 // Creates the library.
 function dogenericlib() {
-  const pakket = Pakket(source, { type: 'generic', export: exportname });
+  const pakket = Pakket(source, { export: exportname, type: 'generic' });
 
   return pakket.bundle()
     .pipe(replace('{{lib:name}}', exportname))
@@ -98,7 +98,8 @@ function delgeneric(done) {
 
 // -- Gulp Public Task(s)
 module.exports = series(
-  clean, dogenericlib,
+  clean,
+  dogenericlib,
   parallel(doumdlib, domodule),
   delgeneric,
 );

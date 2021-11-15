@@ -1,5 +1,6 @@
 *
 
+!.husky/pre-commit
 !public/src/**/*
 !public/.htaccess
 !public/404.html

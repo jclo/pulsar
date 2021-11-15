@@ -34,7 +34,7 @@ module.exports = {
   libname,
   index: './index.js',
 
-  // This is the entry javascript file of your library.
+  // This is the entry javascript file for your library.
   source,
   exportname,
   bundle: 'wapp',
@@ -100,7 +100,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Pakket v1.0.6 and from {{boiler:name}} v{{boiler:name:version}}.',
+      ' * Built from ES6Pakket v1.0.7 and from {{boiler:name}} v{{boiler:name:version}}.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },

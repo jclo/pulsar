@@ -14,7 +14,7 @@ const config = require('./tasks/config')
 
 
 // -- Local Constants
-const filesToWatch = ['public/src/**/*.js']
+const filesToWatch = ['public/src/**/*.js', 'public/src/**/*.css']
     ;
 
 

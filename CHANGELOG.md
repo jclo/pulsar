@@ -1,6 +1,6 @@
 ### HEAD
 
-### 1.0.0 (July 14, 2021)
+### 1.0.0 (November 15, 2021)
 
   * First build,
   * First release candidate,
@@ -10,4 +10,5 @@
   * Third release candidate,
   * Updated the project dependencies,
   * Fourth release candidate,
+  * Updated the project dependencies,
   * ...,

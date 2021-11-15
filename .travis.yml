@@ -5,7 +5,7 @@ dist:
 language:
   - node_js
 node_js:
-  - "14"
+  - "16"
 notifications:
   email: false
 before_install:
@@ -13,7 +13,6 @@ before_install:
 before_script:
   - npm prune
 script:
-  - npm run dev &
   - npm run test
   - npm run check-coverage
 after_success:
