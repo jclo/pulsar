@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.0.1 (November 15, 2021)
+
+  * Added `bin/pixarpulsar.js` script,
+  * ...,
+
+
 ### 1.0.0 (November 15, 2021)
 
   * First build,
