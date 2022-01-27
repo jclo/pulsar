@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/pulsar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A boilerplate to build complex Web Apps relying on Pakket",
   "main": "",
   "bin": {
@@ -39,18 +39,18 @@
   },
   "homepage": "https://github.com/jclo/pulsar",
   "dependencies": {
-    "@mobilabs/rview": "^1.0.9",
+    "@mobilabs/rview": "^1.0.10",
     "nopt": "^5.0.0",
-    "shelljs": "^0.8.4"
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
+    "chai": "^4.3.5",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.25.4",
     "esm": "^3.2.25",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
@@ -62,14 +62,14 @@
     "gulp-uglify-es": "^3.0.0",
     "html5-boilerplate": "^8.0.0",
     "husky": "^7.0.4",
-    "jsdom": "^18.1.0",
+    "jsdom": "^19.0.0",
     "mocha": "^8.4.0",
-    "node-fetch": "^2.6.6",
+    "node-fetch": "^2.6.7",
     "nyc": "^15.1.0",
     "open": "^8.4.0",
     "opener": "^1.5.2",
-    "pakket": "^1.0.5",
-    "@mobilabs/es6pakket": "1.0.7"
+    "pakket": "^1.0.6",
+    "@mobilabs/es6pakket": "1.0.8"
   },
   "publishConfig": {
     "access": "public"

@@ -4,16 +4,16 @@
 
 
 // -- Vendor Modules
-const fs           = require('fs')
-    , readline     = require('readline')
-    , shell        = require('shelljs')
+const fs       = require('fs')
+    , readline = require('readline')
+    , shell    = require('shelljs')
     ;
 
 
 // -- Local Modules
-const site        = 'public'
-    , baseapp     = process.cwd()
-    , html5       = `${baseapp}/node_modules/html5-boilerplate/dist`
+const site    = 'public'
+    , baseapp = process.cwd()
+    , html5   = `${baseapp}/node_modules/html5-boilerplate/dist`
     ;
 
 
