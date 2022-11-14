@@ -5,7 +5,7 @@
   * Updated travis.yml,
   * Replaced favicon.ico by an icon 16x16,
   * Added makeprod script,
-  * ...,
+  * Release.
 
 
 ### 1.0.2 (January 27, 2022)

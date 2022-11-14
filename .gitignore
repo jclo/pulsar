@@ -9,6 +9,7 @@ node_modules
 private_repo
 
 _app
+_app-*
 img
 models/src/icons/*
 !models/src/icons/HOW_TO_CREATE_ICONS.md
