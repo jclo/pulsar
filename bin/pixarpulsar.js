@@ -322,6 +322,7 @@ function _customize(source, dest, app, owner, boilerlib) {
     app: obj.scripts.app,
     makeprivate: obj.scripts.makeprivate,
     makelib: obj.scripts.makelib,
+    makeprod: obj.scripts.makeprod,
     prepare: obj.scripts.prepare,
     doc: obj.scripts.doc,
   };

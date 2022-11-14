@@ -81,7 +81,7 @@ module.exports = {
     // These are the files to copy to the root path of the web app,
     './public/.htaccess',
     './public/404.html',
-    './public/favicon.ico',
+    // './public/favicon.ico',
     './LICENSE.md',
     './public/robots.txt',
     './public/site.webmanifest',

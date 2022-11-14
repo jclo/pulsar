@@ -1,5 +1,13 @@
 ### HEAD
 
+### 1.0.3 (November 14, 2022)
+
+  * Updated travis.yml,
+  * Replaced favicon.ico by an icon 16x16,
+  * Added makeprod script,
+  * ...,
+
+
 ### 1.0.2 (January 27, 2022)
 
   * Updated the project dependencies,
