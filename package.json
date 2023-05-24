@@ -1,24 +1,62 @@
 {
   "name": "@mobilabs/pulsar",
-  "version": "1.0.3",
+  "version": "1.0.3x",
   "description": "A boilerplate to build complex Web Apps relying on Pakket",
   "main": "",
   "bin": {
     "pixarpulsar": "./bin/pixarpulsar.js"
   },
   "scripts": {
-    "create": "node tasks/create.js",
-    "build": "gulp build",
-    "watch": "gulp watch",
-    "dev": "gulp rundev",
+    "general": " --- GENERAL ---",
+
+    "build:js": " --- JAVASCRIPT --- ",
+    "build:js:dev": "node tasks/build.js.dev.js $1",
+    "build:js:prod": "node tasks/build.js.prod.js $1",
+
+    "build:css": " --- CSS --- ",
+    "build:css:dev": "node tasks/build.css.dev.js $1",
+    "build:css:prod": "node tasks/build.css.prod.js $1",
+
+    "import:vendors": "-- VENDORS LIBS & FONTS --",
+    "import:libs": "node tasks/import.libs.js",
+    "import:fonts": "node tasks/import.fonts.js",
+
+    "copy:img": "-- IMG & ICONS --",
+    "build:img:icons": "node tasks/build.img.icons.js",
+ 
+    "build:generic": " --- BUILD (GENERIC) --- ",
+    "build:import:vendors": "npm run import:libs && npm run import:fonts",
+
+    "build:development": " --- BUILD (DEVELOPMENT) --- ",
+    "build:dev": "npm run build:import:vendors && npm run build:img:icons && npm run build:js:dev && npm run build:css:dev",
+
+    "build:production": " --- BUILD (PRODUCTION) --- ",
+    "build:skeleton:prod": "node tasks/build.skeleton.prod.js $1",
+    "build:extra:prod": "node tasks/build.extra.prod.js $1",
+    "prebuild:prod": "npm run build:dev && npm run build:skeleton:prod && npm run build:extra:prod",
+    "build:prod": "npm run build:js:prod && npm run build:css:prod",
+
+    "testing": " --- TESTING --- ",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
-    "display-coverage": "opener ./coverage/lcov-report/index.html",
-    "check-coverage": "nyc check-coverage --statements 40 --branches 20 --functions 40 --lines 40",
-    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "display:coverage": "open -a safari ./coverage/lcov-report/index.html",
+    "check:coverage": "nyc check-coverage --statements 40 --branches 20 --functions 40 --lines 40",
+    "report:coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
-    "makedist": "gulp makedist",
-    "app": "gulp runapp",
-    "makeprod": "rm -rf _app-$npm_package_version && npm run makedist && cp -r _app _app-$npm_package_version",
+
+    "serving": " --- SERVING --- ",
+    "server:dev": "http-server ./public --port 8080",
+    "server:prod": "http-server ./_app --port 8090",
+
+    "watch:js:css": " --- WATCHING --- ",
+    "watch:js": "nodemon --watch './src/**/*.js' --exec npm run build:js:dev",
+    "watch:css": "nodemon --watch './src/**/*.css' --exec npm run build:css:dev",
+    "watch": "npm run watch:js",
+
+    "deployment": " --- DEPLOYMENT --- ",
+    "dep:prod": "rm -rf _app-$npm_package_version && npm run build:prod && cp -r _app _app-$npm_package_version",
+    "dep:private": "npm run build:prod && node tasks/dep.private.js && sh tasks/compress.sh ${npm_package_name} ${npm_package_version} @mobilabs",
+
+    "others": " --- OTHERS ---",
     "prepare": "husky install",
     "doc": ""
   },
@@ -40,37 +78,30 @@
   },
   "homepage": "https://github.com/jclo/pulsar",
   "dependencies": {
-    "@mobilabs/rview": "^1.0.10",
-    "nopt": "^5.0.0",
+    "@mobilabs/rview": "^1.1.0",
+    "nopt": "^7.1.0",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "chai": "^4.3.5",
+    "chai": "^4.3.7",
+    "clean-css": "^5.3.2",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
-    "del": "^6.0.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.41.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-import": "^2.27.5",
     "esm": "^3.2.25",
-    "gulp": "^4.0.2",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.7.0",
-    "gulp-header": "^2.0.9",
-    "gulp-rename": "^2.0.0",
-    "gulp-replace": "^1.1.3",
-    "gulp-uglify-es": "^3.0.0",
     "html5-boilerplate": "^8.0.0",
-    "husky": "^7.0.4",
-    "jsdom": "^19.0.0",
+    "http-server": "^14.1.1",
+    "husky": "^8.0.3",
+    "jsdom": "^22.0.0",
     "mocha": "^8.4.0",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.6.11",
+    "nodemon": "^2.0.22",
     "nyc": "^15.1.0",
-    "open": "^8.4.0",
-    "opener": "^1.5.2",
-    "pakket": "^1.0.6",
-    "@mobilabs/es6pakket": "1.0.8"
+    "pakket": "^1.0.7",
+    "terser": "^5.17.4",
+    "@mobilabs/es6pakket": "1.1.0"
   },
   "publishConfig": {
     "access": "public"

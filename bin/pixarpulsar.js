@@ -8,7 +8,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2022 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr)
+ * Copyright (c) 2023 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -274,7 +274,7 @@ function _addSkeleton(base, app, owner, cright) {
  * @returns {}              -,
  */
 function _duplicate(source, dest) {
-  const dupFiles = ['.eslintrc', '.travis.yml', 'gulpfile.js'];
+  const dupFiles = ['.eslintrc', '.travis.yml', 'rmdstore.sh'];
 
   for (let i = 0; i < dupFiles.length; i++) {
     process.stdout.write(`  copied ${dupFiles[i]}\n`);
@@ -309,23 +309,24 @@ function _customize(source, dest, app, owner, boilerlib) {
   // pack.unpkg = `_dist/lib/${app.toLowerCase()}.mjs`;
   // pack.module = `_dist/lib/${app.toLowerCase()}.min.mjs`;
   pack.bin = {};
-  pack.scripts = {
-    build: obj.scripts.build,
-    watch: obj.scripts.watch,
-    dev: obj.scripts.dev,
-    test: obj.scripts.test,
-    'display-coverage': obj.scripts['display-coverage'],
-    'check-coverage': 'nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100',
-    'report-coverage': obj.scripts['report-coverage'],
-    report: obj.scripts.report,
-    makedist: obj.scripts.makedist,
-    app: obj.scripts.app,
-    makeprivate: obj.scripts.makeprivate,
-    makelib: obj.scripts.makelib,
-    makeprod: obj.scripts.makeprod,
-    prepare: obj.scripts.prepare,
-    doc: obj.scripts.doc,
-  };
+  // pack.scripts = {
+  //   build: obj.scripts.build,
+  //   watch: obj.scripts.watch,
+  //   dev: obj.scripts.dev,
+  //   test: obj.scripts.test,
+  //   'display-coverage': obj.scripts['display-coverage'],
+  //   'check-coverage': 'nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100',
+  //   'report-coverage': obj.scripts['report-coverage'],
+  //   report: obj.scripts.report,
+  //   makedist: obj.scripts.makedist,
+  //   app: obj.scripts.app,
+  //   makeprivate: obj.scripts.makeprivate,
+  //   makelib: obj.scripts.makelib,
+  //   makeprod: obj.scripts.makeprod,
+  //   prepare: obj.scripts.prepare,
+  //   doc: obj.scripts.doc,
+  // };
+  pack.scripts = obj.scripts;
   pack.repository = obj.repository;
   pack.repository.url = `https://github.com/${owner.acronym}/${app.toLowerCase()}.git`;
   pack.keywords = ['ES6'];
@@ -457,7 +458,7 @@ function _addPublic(source, dest, folder, app, boilerlib) {
  * @returns {}              -,
  */
 function _addTasks(source, dest, folder, app, boilerlib) {
-  const exclude = ['compress.sh', 'create.js', 'makeprivatepackage.js']
+  const exclude = ['compress.sh', 'create.js', 'dep.private.js']
       , boiler  = '{{boiler:name}}'
       , ver     = '{{boiler:name:version}}'
       ;
@@ -476,10 +477,8 @@ function _addTasks(source, dest, folder, app, boilerlib) {
   shell.sed('-i', boiler, boilerlib, `${dest}/${folder}/config.js`);
   shell.sed('-i', ver, version, `${dest}/${folder}/config.js`);
 
-  // Removes the 'makeprivate' task that doesn't exist for the target:
-  shell.sed('-i', ', makeprivate = require', '// , makeprivate = require', `${dest}/gulpfile.js`);
-  shell.sed('-i', 'exports.makeprivate', '// exports.makeprivate', `${dest}/gulpfile.js`);
-  shell.sed('-i', /, makeprivate\);/, '/* , makeprivate */);', `${dest}/gulpfile.js`);
+  // Removes the 'dep.private' task that doesn't exist for the target:
+  shell.sed('-i', '^.*"dep:private":.*$', '', `${dest}/package.json`);
 }
 
 /**

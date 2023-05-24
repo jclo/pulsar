@@ -58,3 +58,5 @@ describe('Test Pulsar:', () => {
   testlib(Pulsar, '{{lib:name}}', '{{lib:version}}', 'without new');
   // testlib(Pulsar, libname, pack.version, 'without new');
 });
+
+// - oOo --

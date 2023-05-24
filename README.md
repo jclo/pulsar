@@ -22,7 +22,7 @@ Then, you just need to create a `package.json` file that contains:
   "name": "NameOfYourProject",
   "scripts": {
     "create": "npm install @mobilabs/pulsar && npm run populate",
-    "populate": "pixarpulsar populate --name $npm_package_name --author $npm_package_config_name --acronym $npm_package_config_acronym --email $npm_package_config_email --url $npm_package_config_url && npm install && npm run build && npm run test && npm run report && npm run dev"
+    "populate": "pixarpulsar populate --name $npm_package_name --author $npm_package_config_name --acronym $npm_package_config_acronym --email $npm_package_config_email --url $npm_package_config_url && npm install && npm run build:dev && npm run test && npm run report && npm run dev"
   },
   "config": {
     "name": "John Doe",
@@ -69,7 +69,6 @@ Your project Folder
       |_ .npmignore           // Files that Npm must ignore (optional),
       |_ .travis.yml          // A configuration file for Travis CI (if you use it),
       |_ .CHANGELOG.md        // The changes between your different versions,
-      |_ .gulpfile.js         // The main Gulp task,
       |_ index.js             // The link to your javascript code,
       |_ LICENSE.md           // The license that applies to your library (here MIT),
       |_ package-lock.json    // The NPM dependency tree,
@@ -85,7 +84,7 @@ And, your browser displays the Web App at the url `http://localhost:8888`.
 In a terminal, type the command:
 
 ```bash
-npm run build
+npm run build:dev
 ```
 
 It builds the Web App.
@@ -93,7 +92,7 @@ It builds the Web App.
 In another terminal type the command:
 
 ```bash
-npm run dev
+npm run server:dev
 ```
 
 It starts an http server and makes the Web App visible in your browser.
@@ -104,13 +103,13 @@ It starts an http server and makes the Web App visible in your browser.
 When your development is over, type in a terminal:
 
 ```bash
-npm run makedist
+npm run build:prod
 ```
 
 it creates the folder `_app` that contains the Web App ready to be deployed. And you can see the final result by typing:
 
 ```bash
-npm run app
+npm run server:prod
 ```
 
 Enjoy!

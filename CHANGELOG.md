@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.1.0 (May 24, 2023)
+
+  * Replaced Gulp builder by npm build scripts,
+  * ...,
+
+
 ### 1.0.3 (November 14, 2022)
 
   * Updated travis.yml,

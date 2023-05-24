@@ -28,9 +28,9 @@ module.exports = {
   cssdir: './public/css',
   imgdir: './public/img',
   fontsdir: './public/fonts',
-  icons: './public/src/icons/**/*',
-  img: './public/src/**/img/**/*',
-  vendor: './public/vendor/**/*',
+  icons: './public/src/icons',
+  img: './public/src',
+  vendor: './public/vendor',
   libname,
   index: './index.js',
 
@@ -81,14 +81,11 @@ module.exports = {
     // These are the files to copy to the root path of the web app,
     './public/.htaccess',
     './public/404.html',
-    // './public/favicon.ico',
     './LICENSE.md',
     './public/robots.txt',
     './public/site.webmanifest',
     // PWA
     './public/manifest.json',
-    './public/offline.html',
-    './public/sw.js',
   ],
 
   get license() {
@@ -100,7 +97,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Pakket v1.0.8 and from {{boiler:name}} v{{boiler:name:version}}.',
+      ' * Built from ES6Pakket v1.1.0 and from {{boiler:name}} v{{boiler:name:version}}.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },
