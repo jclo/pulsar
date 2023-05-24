@@ -3,7 +3,7 @@
 ### 1.1.0 (May 24, 2023)
 
   * Replaced Gulp builder by npm build scripts,
-  * ...,
+  * Release.
 
 
 ### 1.0.3 (November 14, 2022)
