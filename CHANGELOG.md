@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.1.1 (May 25, 2023)
+
+  * Fixed a few typos,
+  * ...,
+
+
 ### 1.1.0 (May 24, 2023)
 
   * Replaced Gulp builder by npm build scripts,

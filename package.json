@@ -18,17 +18,18 @@
     "build:css:prod": "node tasks/build.css.prod.js $1",
 
     "import:vendors": "-- VENDORS LIBS & FONTS --",
-    "import:libs": "node tasks/import.libs.js",
-    "import:fonts": "node tasks/import.fonts.js",
+    "import:libs": "node tasks/import.libs.js $1",
+    "import:fonts": "node tasks/import.fonts.js $1",
 
     "copy:img": "-- IMG & ICONS --",
-    "build:img:icons": "node tasks/build.img.icons.js",
+    "build:img:icons": "node tasks/build.img.icons.js $1",
  
     "build:generic": " --- BUILD (GENERIC) --- ",
     "build:import:vendors": "npm run import:libs && npm run import:fonts",
 
     "build:development": " --- BUILD (DEVELOPMENT) --- ",
-    "build:dev": "npm run build:import:vendors && npm run build:img:icons && npm run build:js:dev && npm run build:css:dev",
+    "prebuild:dev": "npm run build:import:vendors && npm run build:img:icons",
+    "build:dev": "npm run build:js:dev && npm run build:css:dev",
 
     "build:production": " --- BUILD (PRODUCTION) --- ",
     "build:skeleton:prod": "node tasks/build.skeleton.prod.js $1",

@@ -62,20 +62,20 @@ const VERSION = '0.0.0-alpha.0'
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {}            -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     creates something from something',
+    '                       creates something from something',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -87,8 +87,8 @@ function _help() {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {Object}      returns a promise,
+ * @param {}                -,
+ * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
 function _clean() {
@@ -115,8 +115,8 @@ function _clean() {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _doparallel1(done) {
@@ -137,8 +137,8 @@ function _doparallel1(done) {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _doparallel2(done) {
@@ -159,8 +159,8 @@ function _doparallel2(done) {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _delgeneric(done) {
@@ -199,8 +199,8 @@ function _delgeneric(done) {
  *
  * @function ()
  * @puublic
- * @param {}           -,
- * @returns {}         -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 async function run() {
@@ -217,7 +217,7 @@ async function run() {
   }
 
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mbuild:js:dev\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mbuild:xxx:yyy\x1b[89m\x1b[0m\'...\n');
 
   let pending = PENDING;
   /**
@@ -228,7 +228,7 @@ async function run() {
     if (!pending) {
       _delgeneric(() => {
         const d2 = new Date() - d1;
-        process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+        process.stdout.write(`Finished '\x1b[36mbuild:xxx:yyy\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       });
     }
   }

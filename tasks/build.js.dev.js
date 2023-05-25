@@ -73,20 +73,20 @@ const VERSION = '0.0.0-alpha.0'
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {}            -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     creates the js bundle(s) from ./public/src/main.js',
+    '                       creates the js bundle(s) from ./public/src/main.js',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -98,8 +98,8 @@ function _help() {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {}            -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _clean() {
@@ -126,8 +126,8 @@ function _clean() {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {Object}      returns a promise,
+ * @param {}                -,
+ * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
 function _dogeneric() {
@@ -139,6 +139,7 @@ function _dogeneric() {
     pakket.get((data) => {
       const content = data
         .replace(/{{lib:name}}/g, bundle)
+        .replace(/{{lib:exportname}}/, exportname)
         .replace(/{{lib:version}}/g, version)
         // Remove extra global.
         // (keep the first global only)
@@ -169,8 +170,8 @@ function _dogeneric() {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _doumdlib(done) {
@@ -201,8 +202,8 @@ function _doumdlib(done) {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _domodule(done) {
@@ -236,8 +237,8 @@ function _domodule(done) {
  *
  * @function (arg1)
  * @private
- * @param {Function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _delgeneric(done) {
@@ -261,8 +262,8 @@ function _delgeneric(done) {
  *
  * @function ()
  * @puublic
- * @param {}           -,
- * @returns {}         -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 async function run() {

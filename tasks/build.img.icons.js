@@ -69,9 +69,9 @@ const VERSION = '0.0.0-alpha.0'
  *
  * @function (arg1, arg2)
  * @private
- * @param {string}        the folder path,
- * @param {function}      function to call at the completion.
- * @returns {}            -,
+ * @param {string}          the folder path,
+ * @param {function}        function to call at the completion.
+ * @returns {}              -,
  * @since 0.0.0
  */
 // eslint-disable-next-line no-unused-vars
@@ -116,11 +116,11 @@ function _walk(dir, done) {
  *
  * @function (arg1, arg2, arg3, arg4)
  * @private
- * @param {string}        the source folder,
- * @param {string}        the destination folder,
- * @param {Object}        the options,
- * @param {function}      function to call at the completion.
- * @returns {}            -,
+ * @param {string}          the source folder,
+ * @param {string}          the destination folder,
+ * @param {Object}          the options,
+ * @param {function}        function to call at the completion.
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _copy(source, dest, options, done) {
@@ -172,20 +172,20 @@ function _copy(source, dest, options, done) {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {}            -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     copies project img and icons to ./public/img folder',
+    '                       copies project img and icons to ./public/img folder',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -197,8 +197,8 @@ function _help() {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {Object}      returns a promise,
+ * @param {}                -,
+ * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
 function _clean() {
@@ -225,8 +225,8 @@ function _clean() {
  *
  * @function (arg1)
  * @private
- * @param {function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _cpimg(done) {
@@ -259,8 +259,8 @@ function _cpimg(done) {
  *
  * @function (arg1)
  * @private
- * @param {function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _cpicons(done) {
@@ -290,8 +290,8 @@ function _cpicons(done) {
  *
  * @function ()
  * @puublic
- * @param {}           -,
- * @returns {}         -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 async function run() {

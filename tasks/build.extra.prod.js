@@ -66,20 +66,20 @@ const VERSION = '0.0.0-alpha.0'
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {}            -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     copies extra files(s) to production',
+    '                       copies extra files(s) to production',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -91,8 +91,8 @@ function _help() {
  *
  * @function ()
  * @private
- * @param {}              -,
- * @returns {Object}      returns a promise,
+ * @param {}                -,
+ * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
 function _clean() {
@@ -112,26 +112,17 @@ function _clean() {
   return new Promise((resolve) => {
     fs.rm(`${dist}/fonts`, { force: true, recursive: true }, (err1) => {
       if (err1) throw new Error(err1);
-      fs.mkdir(`${dist}/fonts`, { recursive: true }, (err2) => {
-        if (err2) throw new Error(err2);
-        _next(resolve);
-      });
+      _next(resolve);
     });
 
     fs.rm(`${dist}/img`, { force: true, recursive: true }, (err1) => {
       if (err1) throw new Error(err1);
-      fs.mkdir(`${dist}/img`, { recursive: true }, (err2) => {
-        if (err2) throw new Error(err2);
-        _next(resolve);
-      });
+      _next(resolve);
     });
 
     fs.rm(`${dist}/vendor`, { force: true, recursive: true }, (err1) => {
       if (err1) throw new Error(err1);
-      fs.mkdir(`${dist}/vendor`, { recursive: true }, (err2) => {
-        if (err2) throw new Error(err2);
-        _next(resolve);
-      });
+      _next(resolve);
     });
   });
 }
@@ -141,8 +132,8 @@ function _clean() {
  *
  * @function (arg1)
  * @private
- * @param {function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _cpfonts(done) {
@@ -166,8 +157,8 @@ function _cpfonts(done) {
  *
  * @function (arg1)
  * @private
- * @param {function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _cpimg(done) {
@@ -191,8 +182,8 @@ function _cpimg(done) {
  *
  * @function (arg1)
  * @private
- * @param {function}      the function to call at the completion,
- * @returns {}            -,
+ * @param {function}        the function to call at the completion,
+ * @returns {}              -,
  * @since 0.0.0
  */
 function _cpvendor(done) {
@@ -219,8 +210,8 @@ function _cpvendor(done) {
  *
  * @function ()
  * @puublic
- * @param {}           -,
- * @returns {}         -,
+ * @param {}                -,
+ * @returns {}              -,
  * @since 0.0.0
  */
 async function run() {
@@ -237,7 +228,7 @@ async function run() {
   }
 
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mbuild:js:dev\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mbuild:extra:prod\x1b[89m\x1b[0m\'...\n');
 
   let pending = PENDING;
   /**
@@ -247,7 +238,7 @@ async function run() {
     pending -= 1;
     if (!pending) {
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mbuild:extra:prod\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
     }
   }
 
