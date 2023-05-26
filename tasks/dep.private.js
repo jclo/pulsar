@@ -75,12 +75,12 @@ function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     creates a private npm package to be used locally',
+    '                       creates a private npm package to be used locally',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -184,7 +184,7 @@ function _copypackagejson(done) {
  * Executes the script.
  *
  * @function ()
- * @puublic
+ * @public
  * @param {}                -,
  * @returns {}              -,
  * @since 0.0.0

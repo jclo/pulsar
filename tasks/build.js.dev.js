@@ -139,7 +139,7 @@ function _dogeneric() {
     pakket.get((data) => {
       const content = data
         .replace(/{{lib:name}}/g, bundle)
-        .replace(/{{lib:exportname}}/, exportname)
+        .replace(/{{lib:exportname}}/g, exportname)
         .replace(/{{lib:version}}/g, version)
         // Remove extra global.
         // (keep the first global only)
@@ -261,7 +261,7 @@ function _delgeneric(done) {
  * Executes the script.
  *
  * @function ()
- * @puublic
+ * @public
  * @param {}                -,
  * @returns {}              -,
  * @since 0.0.0

@@ -1,5 +1,12 @@
 ### HEAD
 
+### 1.1.2 (May 26, 2023)
+
+  * Fixed an issue on build.js.dev{.lib}.js task (.replace(/{{lib:exportname}}/g, mainconfig.exportname)),
+  * Fixed a few typos,
+  * ...,
+
+
 ### 1.1.1 (May 25, 2023)
 
   * Fixed a few typos,

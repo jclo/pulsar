@@ -81,12 +81,12 @@ function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                     creates the production folder and copies the files defined in config.js',
+    '                       creates the production folder and copies the files defined in config.js',
     '',
     'Options:',
     '',
-    '-h, --help           output usage information',
-    '-v, --version        output the version number',
+    '-h, --help             output usage information',
+    '-v, --version          output the version number',
     '',
   ].join('\n');
 
@@ -276,7 +276,7 @@ function _doofflinehtml(done) {
  * Executes the script.
  *
  * @function ()
- * @puublic
+ * @public
  * @param {}                -,
  * @returns {}              -,
  * @since 0.0.0

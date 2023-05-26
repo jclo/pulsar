@@ -166,7 +166,7 @@ function _docss(done) {
  * Executes the script.
  *
  * @function ()
- * @puublic
+ * @public
  * @param {}                -,
  * @returns {}              -,
  * @since 0.0.0

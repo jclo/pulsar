@@ -102,7 +102,7 @@
     "nyc": "^15.1.0",
     "pakket": "^1.0.7",
     "terser": "^5.17.4",
-    "@mobilabs/es6pakket": "1.1.0"
+    "@mobilabs/es6pakket": "1.1.1"
   },
   "publishConfig": {
     "access": "public"

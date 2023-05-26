@@ -138,7 +138,7 @@ function _importFonts(done) {
     pending -= 1;
     if (!pending) {
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mimportvlibs\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mimportFonts\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       done();
     }
   }
@@ -158,7 +158,7 @@ function _importFonts(done) {
  * Executes the script.
  *
  * @function ()
- * @puublic
+ * @public
  * @param {}                -,
  * @returns {}              -,
  * @since 0.0.0
