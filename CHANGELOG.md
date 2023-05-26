@@ -4,7 +4,7 @@
 
   * Fixed an issue on build.js.dev{.lib}.js task (.replace(/{{lib:exportname}}/g, mainconfig.exportname)),
   * Fixed a few typos,
-  * ...,
+  * Release.
 
 
 ### 1.1.1 (May 25, 2023)
