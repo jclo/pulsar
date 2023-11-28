@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.1.3 (November 28, 2023)
+
+  * Fixed watch:css npm script (not working at all),
+  * ...,
+
+
 ### 1.1.2 (May 26, 2023)
 
   * Fixed an issue on build.js.dev{.lib}.js task (.replace(/{{lib:exportname}}/g, mainconfig.exportname)),

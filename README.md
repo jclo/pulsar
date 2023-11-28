@@ -22,7 +22,7 @@ Then, you just need to create a `package.json` file that contains:
   "name": "NameOfYourProject",
   "scripts": {
     "create": "npm install @mobilabs/pulsar && npm run populate",
-    "populate": "pixarpulsar populate --name $npm_package_name --author $npm_package_config_name --acronym $npm_package_config_acronym --email $npm_package_config_email --url $npm_package_config_url && npm install && npm run build:dev && npm run test && npm run report && npm run dev"
+    "populate": "pixarpulsar populate --name $npm_package_name --author $npm_package_config_name --acronym $npm_package_config_acronym --email $npm_package_config_email --url $npm_package_config_url && npm install && npm run build:dev && npm run test && npm run report && npm run server:dev"
   },
   "config": {
     "name": "John Doe",
