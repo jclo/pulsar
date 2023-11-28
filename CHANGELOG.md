@@ -3,7 +3,7 @@
 ### 1.1.3 (November 28, 2023)
 
   * Fixed watch:css npm script (not working at all),
-  * ...,
+  * Release.
 
 
 ### 1.1.2 (May 26, 2023)
