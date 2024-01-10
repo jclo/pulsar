@@ -4,6 +4,7 @@
 
   * Updated the project with @ES6Pakket v2 (c8, Github Actions),
   * Updated the prooject with HTML5 boilerplate v9,
+  * Added .github folder,
   * ...,
 
 
