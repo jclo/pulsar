@@ -1,5 +1,6 @@
 *
 
+!.github/**/*
 !.husky/pre-commit
 !public/src/**/*
 !public/.htaccess
@@ -18,7 +19,6 @@
 !test/**/*
 
 !.eslintrc
-!.travis.yml
 !gulpfile.js
 !index.js
 !rmdstore.sh

@@ -1,5 +1,12 @@
 ### HEAD
 
+### 1.1.x (January 10, 2024)
+
+  * Updated the project with @ES6Pakket v2 (c8, Github Actions),
+  * Updated the prooject with HTML5 boilerplate v9,
+  * ...,
+
+
 ### 1.1.3 (November 28, 2023)
 
   * Fixed watch:css npm script (not working at all),

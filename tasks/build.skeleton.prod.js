@@ -210,12 +210,12 @@ function _doindexhtml(done) {
     const index = res
       .replace('{{app:name}}', `${libname}`)
       .replace('{{app:version}}', pack.version)
-      .replace('{{app:canonical-link}}', config.app.canonical)
+      // .replace('{{app:canonical-link}}', config.app.canonical)
       .replace('{{app:title}}', config.app.title)
       .replace('{{app:description}}', config.app.description)
-      .replace('{{company:copyright}}', config.company.copyright)
       .replace('{{company:name}}', config.company.name)
       .replace('{{company:slogan}}', config.company.slogan)
+      .replace('{{company:copyright}}', config.company.copyright)
       .replace(`js/${bundle}.js`, `js/${bundle}.min.js`)
       .replace(`js/${bundle}.mjs`, `js/${bundle}.min.mjs`)
     ;
@@ -249,12 +249,12 @@ function _doofflinehtml(done) {
     const index = res
       .replace('{{app:name}}', `${libname}`)
       .replace('{{app:version}}', pack.version)
-      .replace('{{app:canonical-link}}', config.app.canonical)
+      // .replace('{{app:canonical-link}}', config.app.canonical)
       .replace('{{app:title}}', config.app.title)
       .replace('{{app:description}}', config.app.description)
-      .replace('{{company:copyright}}', config.company.copyright)
       .replace('{{company:name}}', config.company.name)
       .replace('{{company:slogan}}', config.company.slogan)
+      .replace('{{company:copyright}}', config.company.copyright)
       .replace(`js/${bundle}.js`, `js/${bundle}.min.js`)
       .replace(`js/${bundle}.mjs`, `js/${bundle}.min.mjs`)
     ;

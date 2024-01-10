@@ -38,11 +38,10 @@
     "build:prod": "npm run build:js:prod && npm run build:css:prod",
 
     "testing": " --- TESTING --- ",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
+    "test": "cross-env NODE_ENV=test c8 --reporter=lcov mocha --require esm ./test/main.js",
     "display:coverage": "open -a safari ./coverage/lcov-report/index.html",
-    "check:coverage": "nyc check-coverage --statements 40 --branches 20 --functions 40 --lines 40",
-    "report:coverage": "nyc report --reporter=text-lcov | coveralls",
-    "report": "nyc report",
+    "check:coverage": "c8 check-coverage --statements 40 --branches 2à --functions 40 --lines 40",
+    "report": "c8 report",
 
     "serving": " --- SERVING --- ",
     "server:dev": "http-server ./public --port 8080",
@@ -80,29 +79,28 @@
   },
   "homepage": "https://github.com/jclo/pulsar",
   "dependencies": {
-    "@mobilabs/rview": "^1.1.0",
-    "nopt": "^7.1.0",
+    "@mobilabs/rview": "^1.2.0",
+    "nopt": "^7.2.0",
     "shelljs": "^0.8.5"
   },
   "devDependencies": {
-    "chai": "^4.3.10",
-    "clean-css": "^5.3.2",
-    "coveralls": "^3.1.1",
+    "c8": "^9.0.0",
+    "chai": "4.3.10",
+    "clean-css": "^5.3.3",
     "cross-env": "^7.0.3",
-    "eslint": "^8.54.0",
+    "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "esm": "^3.2.25",
-    "html5-boilerplate": "^8.0.0",
+    "html5-boilerplate": "^9.0.0",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "jsdom": "^23.0.0",
+    "jsdom": "23.1.0",
     "mocha": "^8.4.0",
-    "nodemon": "^3.0.1",
-    "nyc": "^15.1.0",
-    "pakket": "^1.0.7",
-    "terser": "^5.17.4",
-    "@mobilabs/es6pakket": "1.1.1"
+    "nodemon": "^3.0.2",
+    "pakket": "^1.1.0",
+    "terser": "^5.26.0",
+    "@mobilabs/es6pakket": "2.0.0"
   },
   "publishConfig": {
     "access": "public"

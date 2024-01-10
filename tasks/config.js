@@ -63,8 +63,7 @@ module.exports = {
   css: [
     // These are the css project files to bundle together. These two files
     // must always be the first:
-    './node_modules/html5-boilerplate/dist/css/normalize.css',
-    './node_modules/html5-boilerplate/dist/css/main.css',
+    './node_modules/html5-boilerplate/dist/css/style.css',
     // Now put here your css files:
     // From vendor:
     // example: './node_modules/font-awesome/css/font-awesome.css',
