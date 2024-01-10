@@ -274,7 +274,7 @@ function _addSkeleton(base, app, owner, cright) {
  * @returns {}              -,
  */
 function _duplicate(source, dest) {
-  const dupFiles = ['.eslintrc', '.travis.yml', 'rmdstore.sh'];
+  const dupFiles = ['.eslintrc', 'rmdstore.sh'];
 
   for (let i = 0; i < dupFiles.length; i++) {
     process.stdout.write(`  copied ${dupFiles[i]}\n`);
@@ -497,6 +497,20 @@ function _addHuskyHook(source, dest, folder) {
 }
 
 /**
+ * Adds Github workfow.
+ *
+ * @function (arg1, arg2, arg3)
+ * @private
+ * @param {String}          the source path,
+ * @param {String}          the destination path,
+ * @param {String}          the destination folder,
+ * @returns {}              -,
+ */
+function _addGithub(source, dest, folder) {
+  shell.cp('-r', `${source}/${folder}`, `${dest}/.`);
+}
+
+/**
  * Adds the test files.
  *
  * @function (arg1, arg2, arg3, arg4, arg5)
@@ -596,6 +610,9 @@ function _populate(options) {
 
   // Copy Husky Hook:
   _addHuskyHook(baseboiler, baseapp, husky, app, boilerlib);
+
+  // Copy .github/workflows:
+  _addGithub(baseboiler, baseapp, '.github');
 
   process.stdout.write('Done. Enjoy!\n');
 }

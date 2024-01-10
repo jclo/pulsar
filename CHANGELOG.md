@@ -1,12 +1,12 @@
 ### HEAD
 
-### 1.1.x (January 10, 2024)
+### 1.2.0 (January 10, 2024)
 
   * Updated the project with @ES6Pakket v2 (c8, Github Actions),
   * Updated the prooject with HTML5 boilerplate v9,
   * Added .github folder,
   * Updated the README.md file,
-  * ...,
+  * Release.
 
 
 ### 1.1.3 (November 28, 2023)
