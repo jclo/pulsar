@@ -2,11 +2,9 @@
 
 [![NPM version][npm-image]][npm-url]
 [![GitHub last commit][commit-image]][commit-url]
-[![Travis CI][travis-image]][travis-url]
+[![Github workflow][ci-image]][ci-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![License][license-image]](LICENSE.md)
-<!-- [![Dependencies status][dependencies-image]][dependencies-url]
-[![Dev Dependencies status][devdependencies-image]][devdependencies-url] -->
 
 `Pulsar` is a boilerplate for writing a simple Web App or a PWA App relying on the bundler `Pakket`.
 
@@ -45,6 +43,9 @@ That's almost all! When the script has been executed, your folder contains the f
 
 ```bash
 Your project Folder
+      |_ .github
+      |     |_ workflows
+      |           |_ ci.yml   // Github Workflow file (if you use it),
       |
       |_ public
       |   |_ ...              // The source files of your library,
@@ -67,7 +68,6 @@ Your project Folder
       |_ .eslintrc            // A Configuration file for the ESLint linter tool (if you use it),
       |_ .gitignore           // Files that Git must ignore (if you use git),
       |_ .npmignore           // Files that Npm must ignore (optional),
-      |_ .travis.yml          // A configuration file for Travis CI (if you use it),
       |_ .CHANGELOG.md        // The changes between your different versions,
       |_ index.js             // The link to your javascript code,
       |_ LICENSE.md           // The license that applies to your library (here MIT),
@@ -124,19 +124,15 @@ Enjoy!
 [npm-image]: https://img.shields.io/npm/v/@mobilabs/pulsar.svg?logo=npm&logoColor=fff&label=NPM+package
 [release-image]: https://img.shields.io/github/release/jclo/pulsar.svg?include_prereleases
 [commit-image]: https://img.shields.io/github/last-commit/jclo/pulsar.svg?logo=github
-[travis-image]: https://img.shields.io/travis/com/jclo/pulsar.svg?logo=travis-ci&logoColor=fff
+[ci-image]: https://github.com/jclo/pulsar/actions/workflows/ci.yml/badge.svg
 [coveralls-image]: https://img.shields.io/coveralls/jclo/pulsar/master.svg?&logo=coveralls
-[dependencies-image]: https://david-dm.org/jclo/pulsar/status.svg?theme=shields.io
-[devdependencies-image]: https://david-dm.org/jclo/pulsar/dev-status.svg?theme=shields.io
 [npm-bundle-size-image]: https://img.shields.io/bundlephobia/minzip/@mobilabs/pulsar.svg
 [license-image]: https://img.shields.io/npm/l/@mobilabs/pulsar.svg
 
 [npm-url]: https://www.npmjs.com/package/@mobilabs/pulsar
 [release-url]: https://github.com/jclo/pulsar/tags
 [commit-url]: https://github.com/jclo/pulsar/commits/master
-[travis-url]: https://app.travis-ci.com/jclo/pulsar?branch=main
+[ci-url]: https://github.com/jclo/pulsar/actions/workflows/ci.yml
 [coveralls-url]: https://coveralls.io/github/jclo/pulsar?branch=master
-[dependencies-url]: https://david-dm.org/jclo/pulsar
-[devdependencies-url]: https://david-dm.org/jclo/pulsar?type=dev
-[license-url]: http://opensource.org/licenses/MIT
 [npm-bundle-size-url]: https://img.shields.io/bundlephobia/minzip/@mobilabs/pulsar
+[license-url]: http://opensource.org/licenses/MIT
