@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.2.x (January 11, 2024)
+
+  * Fixed two typos in bin/pixarpulsar.js and package.json,
+  * ...,
+
+
 ### 1.2.0 (January 10, 2024)
 
   * Updated the project with @ES6Pakket v2 (c8, Github Actions),
