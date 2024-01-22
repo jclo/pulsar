@@ -5,7 +5,7 @@ z_*
 
 coverage
 node_modules
-
+npm_private_repo
 private_repo
 
 _app
