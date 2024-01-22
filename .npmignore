@@ -15,7 +15,7 @@
 !public/site.webmanifest
 !public/sw.js
 
-!tasks/**/*
+!scripts/**/*
 !test/**/*
 
 !.eslintrc

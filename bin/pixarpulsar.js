@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* *****************************************************************************
- * pixarpulsar.js creates the skeleton for a web App.
+ * pixarpulsar.js creates the skeleton for creating a web App.
  *
  * Nota:
  * pixarpulsar.js is a copy and paste of es6lib.js with a few minor changes
@@ -41,11 +41,11 @@ const fs    = require('fs')
 
 
 // -- Local modules
-const config = require('../tasks/config');
+const config = require('../scripts/config');
 
 
 // -- Local Variables
-const defBoilerLib  = require(`${__dirname}/../tasks/config`).libname
+const defBoilerLib  = require(`${__dirname}/../scripts/config`).libname
     /* eslint-disable-next-line object-curly-newline */
     , defAuthor   = { name: 'John Doe', acronym: 'jdo', email: 'jdo@johndoe.com', url: 'http://www.johndoe.com' }
     , copyright   = `Copyright (c) ${new Date().getFullYear()} {{author:name}} <{{author:email}}> ({{author:url}})`
@@ -55,7 +55,7 @@ const defBoilerLib  = require(`${__dirname}/../tasks/config`).libname
     , html5       = require('../package.json').devDependencies['html5-boilerplate']
     , publicdir   = 'public'
     , test        = 'test'
-    , tasks       = 'tasks'
+    , scripts     = 'scripts'
     , husky       = '.husky'
     , docs        = 'docs'
     // Command line Options
@@ -95,6 +95,9 @@ const readme = [
   ' ',
   'MIT.',
   '',
+  '',
+  '-- oOo --',
+  '',
 ].join('\n');
 
 const license = [
@@ -130,29 +133,35 @@ const changelog = [
   '',
   '  * Initial commit,',
   '  * ...,',
-  ''].join('\n');
+  '',
+  '',
+  '-- oOo --',
+  '',
+].join('\n');
 
 const index = [
   `module.exports = require('${config.root}/js/${config.bundle}');`,
-  ''].join('\n');
+  '',
+].join('\n');
 
 const gitignore = [
   '.DS_Store',
   '',
-  '.nyc_output',
   'coverage',
   'node_modules',
-  ''].join('\n');
+  '',
+].join('\n');
 
 const eslintignore = [
   '_app/js/{{lib:lowname}}.min.*',
   '_app/sw.js',
-  ''].join('\n');
+].join('\n');
 
 const npmignore = [
   '*',
   '!_app/**/*',
-  ''].join('\n');
+  '',
+].join('\n');
 
 
 // -- Private Functions --------------------------------------------------------
@@ -304,29 +313,13 @@ function _customize(source, dest, app, owner, boilerlib) {
   pack.version = '0.0.0-alpha.0';
   pack.description = `${app} ...`;
   pack.main = '';
-  // pack.main = `_dist/lib/${app.toLowerCase()}.js`;
-  // pack.minified = `_dist/lib/${app.toLowerCase()}.min.js`;
-  // pack.unpkg = `_dist/lib/${app.toLowerCase()}.mjs`;
-  // pack.module = `_dist/lib/${app.toLowerCase()}.min.mjs`;
   pack.bin = {};
-  // pack.scripts = {
-  //   build: obj.scripts.build,
-  //   watch: obj.scripts.watch,
-  //   dev: obj.scripts.dev,
-  //   test: obj.scripts.test,
-  //   'display-coverage': obj.scripts['display-coverage'],
-  //   'check-coverage': 'nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100',
-  //   'report-coverage': obj.scripts['report-coverage'],
-  //   report: obj.scripts.report,
-  //   makedist: obj.scripts.makedist,
-  //   app: obj.scripts.app,
-  //   makeprivate: obj.scripts.makeprivate,
-  //   makelib: obj.scripts.makelib,
-  //   makeprod: obj.scripts.makeprod,
-  //   prepare: obj.scripts.prepare,
-  //   doc: obj.scripts.doc,
-  // };
+
   pack.scripts = obj.scripts;
+  pack.scripts['check:coverage'] = 'c8 check-coverage --statements 100 --branches 100 --functions 100 --lines 100';
+  delete pack.scripts['dep:private:package'];
+  delete pack.scripts['dep:npm:private:package'];
+
   pack.repository = obj.repository;
   pack.repository.url = `https://github.com/${owner.acronym}/${app.toLowerCase()}.git`;
   pack.keywords = ['ES6'];
@@ -340,17 +333,12 @@ function _customize(source, dest, app, owner, boilerlib) {
   pack.homepage = `https://github.com/${owner.acronym}/${app.toLowerCase()}`;
   pack.dependencies = obj.dependencies;
   pack.devDependencies = obj.devDependencies;
+  pack.c8 = obj.c8;
   pack.publishConfig = obj.publishConfig;
-  pack.publishConfig = {
-    access: 'public',
-  };
-  pack.private = false;
+  pack.private = obj.private;
 
   pack.devDependencies[`@mobilabs/${boilerlib.toLocaleLowerCase()}`] = version;
 
-  delete pack.scripts.create;
-  delete pack.scripts.makelib;
-  delete pack.scripts.makeprivate;
   delete pack.dependencies['@mobilabs/kasar'];
   delete pack.dependencies.nopt;
   delete pack.dependencies.shelljs;
@@ -446,7 +434,7 @@ function _addPublic(source, dest, folder, app, boilerlib) {
 }
 
 /**
- * Adds the task files.
+ * Adds the script files.
  *
  * @function (arg1, arg2, arg3, arg4, arg5)
  * @private
@@ -457,8 +445,8 @@ function _addPublic(source, dest, folder, app, boilerlib) {
  * @param {String}          the name of the boilerplate,
  * @returns {}              -,
  */
-function _addTasks(source, dest, folder, app, boilerlib) {
-  const exclude = ['compress.sh', 'create.js', 'dep.private.js']
+function _addScripts(source, dest, folder, app, boilerlib) {
+  const exclude = ['compress.sh', 'dep.private.js', 'dep.npm.private.sh']
       , boiler  = '{{boiler:name}}'
       , ver     = '{{boiler:name:version}}'
       ;
@@ -476,9 +464,6 @@ function _addTasks(source, dest, folder, app, boilerlib) {
   shell.sed('-i', boilerlib, app, `${dest}/${folder}/config.js`);
   shell.sed('-i', boiler, boilerlib, `${dest}/${folder}/config.js`);
   shell.sed('-i', ver, version, `${dest}/${folder}/config.js`);
-
-  // Removes the 'dep.private' task that doesn't exist for the target:
-  shell.sed('-i', '^.*"dep:private":.*$', '', `${dest}/package.json`);
 }
 
 /**
@@ -602,8 +587,8 @@ function _populate(options) {
   // Copy the src files:
   _addPublic(baseboiler, baseapp, publicdir, app, boilerlib);
 
-  // Add tasks:
-  _addTasks(baseboiler, baseapp, tasks, app, boilerlib);
+  // Add scripts:
+  _addScripts(baseboiler, baseapp, scripts, app, boilerlib);
 
   // Copy Test Files:
   _addTest(baseboiler, baseapp, test, app, boilerlib);
@@ -633,3 +618,6 @@ if (parsed.argv.remain[0] === 'populate') {
 } else {
   _help();
 }
+
+
+// -- oOo ---
