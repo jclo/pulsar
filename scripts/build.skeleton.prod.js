@@ -32,8 +32,8 @@
 
 // -- Vendor Modules
 const fs         = require('fs')
-    , path       = require('path')
     , nopt       = require('nopt')
+    , path       = require('path')
     , { minify } = require('terser')
     ;
 
@@ -45,21 +45,21 @@ const config = require('./config')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION      = '0.0.0-alpha.0'
+    , opts         = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts    = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
+    , parsed       = nopt(opts, shortOpts, process.argv, 2)
     , { dist }     = config
     , { webfiles } = config
     , { root }     = config
     , { libname }  = config
-    , { bundle }   = config
+    , { name }     = config
     ;
 
 
@@ -102,7 +102,7 @@ function _help() {
  * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
@@ -116,6 +116,7 @@ function _clean() {
         const d2 = new Date() - d1;
         process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
         resolve();
+        if (done) done();
       });
     });
   });
@@ -132,7 +133,7 @@ function _clean() {
  */
 function _doskeleton(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdoskeleton\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mdo:skeleton\x1b[89m\x1b[0m\'...\n');
 
   /**
    * Wait all processes completed;
@@ -142,7 +143,7 @@ function _doskeleton(done) {
     pending -= 1;
     if (!pending) {
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mdoskeleton\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mdo:skeleton\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       done();
     }
   }
@@ -168,14 +169,14 @@ function _doskeleton(done) {
  */
 function _dosw(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdosw\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mdo:sw\x1b[89m\x1b[0m\'...\n');
 
   fs.readFile(`${root}/sw.js`, 'utf-8', (err1, res) => {
     if (err1) throw new Error(err1);
 
     const sw = res
-      .replace(`js/${bundle}.js`, `js/${bundle}.min.js`)
-      .replace(`js/${bundle}.mjs`, `js/${bundle}.min.mjs`)
+      .replace(`js/${name}.js`, `js/${name}.min.js`)
+      .replace(`js/${name}.mjs`, `js/${name}.min.mjs`)
     ;
 
     minify(sw, {})
@@ -184,7 +185,7 @@ function _dosw(done) {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
-          process.stdout.write(`Finished '\x1b[36mdosw\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+          process.stdout.write(`Finished '\x1b[36mdo:sw\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
           done();
         });
       });
@@ -216,8 +217,8 @@ function _doindexhtml(done) {
       .replace('{{company:name}}', config.company.name)
       .replace('{{company:slogan}}', config.company.slogan)
       .replace('{{company:copyright}}', config.company.copyright)
-      .replace(`js/${bundle}.js`, `js/${bundle}.min.js`)
-      .replace(`js/${bundle}.mjs`, `js/${bundle}.min.mjs`)
+      .replace(`js/${name}.js`, `js/${name}.min.js`)
+      .replace(`js/${name}.mjs`, `js/${name}.min.mjs`)
     ;
 
     fs.writeFile(`${dist}/index.html`, index, (er) => {
@@ -255,8 +256,8 @@ function _doofflinehtml(done) {
       .replace('{{company:name}}', config.company.name)
       .replace('{{company:slogan}}', config.company.slogan)
       .replace('{{company:copyright}}', config.company.copyright)
-      .replace(`js/${bundle}.js`, `js/${bundle}.min.js`)
-      .replace(`js/${bundle}.mjs`, `js/${bundle}.min.mjs`)
+      .replace(`js/${name}.js`, `js/${name}.min.js`)
+      .replace(`js/${name}.mjs`, `js/${name}.min.mjs`)
     ;
 
     fs.writeFile(`${dist}/offline.html`, index, (er) => {
@@ -309,11 +310,12 @@ async function run() {
     }
   }
 
-  await _clean();
-  _doskeleton(done);
-  _dosw(done);
-  _doindexhtml(done);
-  _doofflinehtml(done);
+  _clean(() => {
+    _doskeleton(done);
+    _dosw(done);
+    _doindexhtml(done);
+    _doofflinehtml(done);
+  });
 }
 
 

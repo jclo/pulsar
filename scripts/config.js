@@ -1,3 +1,16 @@
+/** ************************************************************************
+ *
+ * Configuration file.
+ *
+ *
+ *
+ * @namespace    -
+ * @dependencies none
+ * @exports      -
+ * @author       -
+ * @since        0.0.0
+ * @version      -
+ * ********************************************************************** */
 /* eslint one-var: 0, semi-style: 0 */
 
 
@@ -10,6 +23,7 @@ const pack = require('../package.json');
 
 // -- Local Constants
 const libname    = 'Pulsar'
+    , name       = 'wapp'
     , source     = './public/src/main.js'
     , exportname = 'Pulsar'
     ;
@@ -22,8 +36,8 @@ const libname    = 'Pulsar'
 
 module.exports = {
   ES6GLOB: '$__ES6GLOB',
-  dist: './_app',
   root: './public',
+  dist: './_app',
   jsdir: './public/js',
   cssdir: './public/css',
   imgdir: './public/img',
@@ -32,18 +46,21 @@ module.exports = {
   img: './public/src',
   vendor: './public/vendor',
   libname,
+  name,
   index: './index.js',
+  distlink: `./_dist/lib/${name}.js`,
 
-  // This is the entry javascript file for your library.
+  // This is the entry javascript file of your library. Choose one
+  // pattern among the proposed ones in src. The files 'basic.js',
+  // 'functional.js', 'functional-shared.js', 'prototypal.js',
+  // 'pseudoclassical.js' and pseudoclassical-auto.js' are mutually exclusives.
   source,
-  exportname,
-  bundle: 'wapp',
+  export: exportname,
 
   // These informations are used to fill the header of the index.html file:
   app: {
     title: 'Put the title of your app here',
     description: 'Put the description of your app here',
-    canonical: 'https://www.mydomain.com',
   },
   company: {
     name: 'Put the name of your company here',
@@ -61,10 +78,8 @@ module.exports = {
   },
 
   css: [
-    // These are the css project files to bundle together. These two files
-    // must always be the first:
-    './node_modules/html5-boilerplate/dist/css/style.css',
-    // Now put here your css files:
+    // These are the css project files to bundle together.
+    // Put here your css files:
     // From vendor:
     // example: './node_modules/font-awesome/css/font-awesome.css',
     // From project:
@@ -96,7 +111,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Pakket v2.1.0 and from {{boiler:name}} v{{boiler:name:version}}.',
+      ' * Built from ES6Pakket v2.1.1 and from {{boiler:name}} v{{boiler:name:version}}.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },

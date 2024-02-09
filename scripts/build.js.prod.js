@@ -13,6 +13,7 @@
  *  . _copydevm                   builds the ES6 module production file,
  *  . _makeminified               builds and minifies the js production file,
  *  . _makeminifiedm              builds and minifies the ES6 module production file,
+ *  . _doLibs                     builds the js production libraries,
  *
  *
  * Public Static Methods:
@@ -43,19 +44,19 @@ const config = require('./config')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION     = '0.0.0-alpha.0'
+    , opts        = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts   = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
+    , parsed      = nopt(opts, shortOpts, process.argv, 2)
     , { dist }    = config
     , libdir      = config.jsdir
-    , { bundle }  = config
+    , { name }    = config
     , { license } = config
     ;
 
@@ -93,13 +94,13 @@ function _help() {
 /**
  * Removes the previous js production build.
  *
- * @function ()
+ * @function (arg1)
  * @private
- * @param {}                -,
- * @returns {}              -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
@@ -113,6 +114,7 @@ function _clean() {
         const d2 = new Date() - d1;
         process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
         resolve();
+        if (done) done();
       });
     });
   });
@@ -129,18 +131,18 @@ function _clean() {
  */
 function _copydev(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcopydev\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write("Starting '\x1b[36mcopy:umd\x1b[89m\x1b[0m'...\n");
 
-  fs.readFile(`${libdir}/${bundle}.js`, 'utf8', (err1, data) => {
+  fs.readFile(`${libdir}/${name}.js`, 'utf8', (err1, data) => {
     if (err1) throw new Error(err1);
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/js/${bundle}.js`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/js/${name}.js`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mcopydev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mcopy:umd\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       done();
     });
   });
@@ -157,18 +159,18 @@ function _copydev(done) {
  */
 function _copydevm(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcopydevm\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write("Starting '\x1b[36mcopy:es6\x1b[89m\x1b[0m'...\n");
 
-  fs.readFile(`${libdir}/${bundle}.mjs`, 'utf8', (err1, data) => {
+  fs.readFile(`${libdir}/${name}.mjs`, 'utf8', (err1, data) => {
     if (err1) throw new Error(err1);
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/js/${bundle}.mjs`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/js/${name}.mjs`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mcopydevm\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mcopy:es6\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       done();
     });
   });
@@ -185,9 +187,9 @@ function _copydevm(done) {
  */
 function _makeminified(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mmakeminified\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mmake:minified:umd\x1b[89m\x1b[0m\'...\n');
 
-  fs.readFile(`${libdir}/${bundle}.js`, 'utf8', (err1, data) => {
+  fs.readFile(`${libdir}/${name}.js`, 'utf8', (err1, data) => {
     if (err1) throw new Error(err1);
 
     let content = license;
@@ -195,11 +197,11 @@ function _makeminified(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/js/${bundle}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/js/${name}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
-          process.stdout.write(`Finished '\x1b[36mmakeminified\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+          process.stdout.write(`Finished '\x1b[36mmake:minified:umd\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
           done();
         });
       });
@@ -217,9 +219,9 @@ function _makeminified(done) {
  */
 function _makeminifiedm(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mmakeminifiedm\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mmake:minified:es6\x1b[89m\x1b[0m\'...\n');
 
-  fs.readFile(`${libdir}/${bundle}.mjs`, 'utf8', (err1, data) => {
+  fs.readFile(`${libdir}/${name}.mjs`, 'utf8', (err1, data) => {
     if (err1) throw new Error(err1);
 
     let content = license;
@@ -227,15 +229,42 @@ function _makeminifiedm(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/js/${bundle}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/js/${name}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
-          process.stdout.write(`Finished '\x1b[36mmakeminifiedm\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+          process.stdout.write(`Finished '\x1b[36mmake:minified:es6\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
           done();
         });
       });
   });
+}
+
+/**
+ * Builds the js production libraries.
+ *
+ * @function (arg1)
+ * @private
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
+ * @since 0.0.0
+ */
+function _doLibs(done) {
+  let pending = 4;
+  /**
+   * Executes done until completion.
+   */
+  function _next() {
+    pending -= 1;
+    if (!pending) {
+      done();
+    }
+  }
+
+  _copydev(_next);
+  _copydevm(_next);
+  _makeminified(_next);
+  _makeminifiedm(_next);
 }
 
 
@@ -251,7 +280,7 @@ function _makeminifiedm(done) {
  * @since 0.0.0
  */
 async function run() {
-  const PENDING = 4;
+  const PENDING = 1;
 
   if (parsed.help) {
     _help();
@@ -279,10 +308,7 @@ async function run() {
   }
 
   await _clean();
-  _copydev(done);
-  _copydevm(done);
-  _makeminified(done);
-  _makeminifiedm(done);
+  _doLibs(done);
 }
 
 

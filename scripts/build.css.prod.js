@@ -7,7 +7,7 @@
  *
  * Private Functions:
  *  . _help                       displays the help message,
- *  . _clean                      removes the previous css production file(s),
+ *  . _clean                      removes the previous build,
  *  . _docss                      creates the css production file(s),
  *
  *
@@ -38,20 +38,20 @@ const config = require('./config')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION     = '0.0.0-alpha.0'
+    , opts        = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts   = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
+    , parsed      = nopt(opts, shortOpts, process.argv, 2)
     , { dist }    = config
     , { license } = config
     , { cssdir }  = config
-    , { bundle }  = config
+    , { name }    = config
     ;
 
 
@@ -88,13 +88,13 @@ function _help() {
 /**
  * Removes the previous build.
  *
- * @function ()
+ * @function ([arg1])
  * @private
- * @param {}                -,
+ * @param {Function}        the function to call at the completion,
  * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
@@ -108,6 +108,7 @@ function _clean() {
         const d2 = new Date() - d1;
         process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
         resolve();
+        if (done) done();
       });
     });
   });
@@ -124,16 +125,16 @@ function _clean() {
  */
 function _docss(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdocss\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mdo:css\x1b[89m\x1b[0m\'...\n');
 
-  fs.readFile(`${cssdir}/${bundle}.min.css`, 'utf8', (err1, data) => {
+  fs.readFile(`${cssdir}/${name}.min.css`, 'utf8', (err1, data) => {
     if (err1) throw new Error(err1);
 
-    fs.writeFile(`${dist}/css/${bundle}.min.css`, `${license}${data}`, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/css/${name}.min.css`, `${license}${data}`, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mdocss\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      process.stdout.write(`Finished '\x1b[36mdo:css\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       done();
     });
   });
@@ -179,8 +180,9 @@ async function run() {
     }
   }
 
-  await _clean();
-  _docss(done);
+  _clean(() => {
+    _docss(done);
+  });
 }
 
 

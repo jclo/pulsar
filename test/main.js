@@ -5,7 +5,6 @@
 
 // -- Vendor Modules
 const { JSDOM } = require('jsdom')
-    // , fetch     = require('node-fetch')
     ;
 
 
@@ -38,7 +37,6 @@ const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
-// global.fetch = fetch;
 
 // Nota:
 // If you want that 'display-coverage' shows the coverage files by files,

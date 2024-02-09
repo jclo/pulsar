@@ -6,7 +6,7 @@ VERSION=$2
 NAMESPACE=$3
 NPM='private_repo'
 TMP='tmp'
-DIST='_app'
+DIST='_dist'
 
 # Check if it is a package with a namespace. For instance @mobilabs/libname
 if [[ ! -z ${NAMESPACE} ]]
@@ -39,3 +39,6 @@ cd ${NPM}/${name}/${VERSION}
 tar zcvf ${name}.tgz ${name}/
 rm -rf ${name}
 echo 'Done!'
+
+
+# -- oOo --

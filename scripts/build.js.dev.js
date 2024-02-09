@@ -9,10 +9,10 @@
  * Private Functions:
  *  . _help                       displays the help message,
  *  . _clean                      removes the previous build,
- *  . _dogenericlib               creates the generic library,
- *  . _doumdlib                   creates the UMD Module,
- *  . _domodule                   creates the ES6 module,
- *  . _delgeneric                 removes the temp file(s),
+ *  . _doES6                      creates the ES6 module,
+ *  . _doUMD                      creates the UMD library,
+ *  . _doLib                      creates one UMD/ES6 library,
+ *  . _doLibs                     creates all UMD/ES6 libraries,
  *
  *
  * Public Static Methods:
@@ -44,22 +44,22 @@ const pack   = require('../package.json')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION     = '0.0.0-alpha.0'
+    , opts        = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts   = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
-    , destination    = config.jsdir
-    , { ES6GLOB }    = config
-    , { source }     = config
-    , { exportname } = config
-    , { bundle }     = config
-    , { version }    = pack
+    , parsed      = nopt(opts, shortOpts, process.argv, 2)
+    , destination = config.jsdir
+    , { ES6GLOB } = config
+    , { source }  = config
+    , exportname  = config.export
+    , { name }    = config
+    , { version } = pack
     ;
 
 
@@ -81,7 +81,7 @@ function _help() {
   const message = ['',
     'Usage: command [options]',
     '',
-    '                       creates the js bundle(s) from ./public/src/main.js',
+    '                       creates the js bundle from ./public/src/main.js',
     '',
     'Options:',
     '',
@@ -96,13 +96,13 @@ function _help() {
 /**
  * Removes the previous build.
  *
- * @function ()
+ * @function (arg1)
  * @private
- * @param {}                -,
- * @returns {}              -,
+ * @param {Function}        the function to call at the completion,
+ * @returns {object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
@@ -116,83 +116,8 @@ function _clean() {
         const d2 = new Date() - d1;
         process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
         resolve();
+        if (done) done();
       });
-    });
-  });
-}
-
-/**
- * Creates the generic library.
- *
- * @function ()
- * @private
- * @param {}                -,
- * @returns {Object}        returns a promise,
- * @since 0.0.0
- */
-function _dogeneric() {
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdogenericlib\x1b[89m\x1b[0m\'...\n');
-
-  return new Promise((resolve) => {
-    const pakket = Pakket(source, { export: exportname, type: 'generic' });
-    pakket.get((data) => {
-      const content = data
-        .replace(/{{lib:name}}/g, bundle)
-        .replace(/{{lib:exportname}}/g, exportname)
-        .replace(/{{lib:version}}/g, version)
-        // Remove extra global.
-        // (keep the first global only)
-        .replace(/\/\* global/, '/* gloobal')
-        .replace(/\/\* global[\w$_\s,]+\*\//g, '/* - */')
-        .replace(/\/\* gloobal/, '/* global')
-        // Remove extra 'use strict'.
-        // (keep the two first only)
-        .replace(/use strict/, 'use_strict')
-        .replace(/use strict/, 'use_strict')
-        .replace(/'use strict';/g, '/* - */')
-        .replace(/use_strict/g, 'use strict')
-      ;
-
-      fs.writeFile(`${destination}/generic.js`, content, { encoding: 'utf8' }, (err) => {
-        if (err) throw new Error(err);
-
-        const d2 = new Date() - d1;
-        process.stdout.write(`Finished '\x1b[36mdogenericlib\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
-        resolve();
-      });
-    });
-  });
-}
-
-/**
- * Creates the UMD Module.
- *
- * @function (arg1)
- * @private
- * @param {Function}        the function to call at the completion,
- * @returns {}              -,
- * @since 0.0.0
- */
-function _doumdlib(done) {
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdoumdlib\x1b[89m\x1b[0m\'...\n');
-
-  fs.readFile(`${destination}/${'generic'}.js`, 'utf8', (err1, data) => {
-    if (err1) throw new Error(err1);
-
-    const content = data
-      .replace('{{lib:es6:define}}\n', '')
-      .replace('{{lib:es6:link}}', 'this')
-      .replace('{{lib:es6:export}}\n', '')
-    ;
-
-    fs.writeFile(`${destination}/${bundle}.js`, content, { encoding: 'utf8' }, (err2) => {
-      if (err2) throw new Error(err2);
-
-      const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mdoumdlib\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
-      done();
     });
   });
 }
@@ -200,40 +125,115 @@ function _doumdlib(done) {
 /**
  * Creates the ES6 module.
  *
- * @function (arg1)
+ * @function (arg1, arg2)
  * @private
+ * @param {String}          the generic library,
  * @param {Function}        the function to call at the completion,
  * @returns {}              -,
  * @since 0.0.0
  */
-function _domodule(done) {
+function _doES6(core, done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdomodule\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mdo:es6\x1b[89m\x1b[0m\'...\n');
 
-  fs.readFile(`${destination}/${'generic'}.js`, 'utf8', (err1, data) => {
-    if (err1) throw new Error(err1);
+  let exportM = '\n// -- Export\n';
+  exportM += `export default ${ES6GLOB}.${exportname};`;
 
-    let exportM = '\n// -- Export\n';
-    exportM += `export default ${ES6GLOB}.${exportname};`;
+  const lib = core
+    .replace('{{lib:es6:define}}', `const ${ES6GLOB} = {};`)
+    .replace('{{lib:es6:link}}', ES6GLOB)
+    .replace('{{lib:es6:export}}', exportM)
+  ;
 
-    const content = data
-      .replace('{{lib:es6:define}}', `const ${ES6GLOB} = {};`)
-      .replace('{{lib:es6:link}}', ES6GLOB)
-      .replace('{{lib:es6:export}}', exportM)
-    ;
+  fs.writeFile(`${destination}/${name}.mjs`, lib, { encoding: 'utf8' }, (err) => {
+    if (err) throw new Error(err);
 
-    fs.writeFile(`${destination}/${bundle}.mjs`, content, { encoding: 'utf8' }, (err2) => {
-      if (err2) throw new Error(err2);
-
-      const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mdomodule\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
-      done();
-    });
+    const d2 = new Date() - d1;
+    process.stdout.write(`Finished '\x1b[36mdo:es6\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    done();
   });
 }
 
 /**
- * Removes the temp file(s).
+ * Creates the UMD library.
+ *
+ * @function (arg1, arg2)
+ * @private
+ * @param {String}          the generic library,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
+ * @since 0.0.0
+ */
+function _doUMD(core, done) {
+  const d1 = new Date();
+  process.stdout.write("Starting '\x1b[36mdo:umd\x1b[89m\x1b[0m'...\n");
+
+  const lib = core
+    .replace('{{lib:es6:define}}\n', '')
+    .replace('{{lib:es6:link}}', 'this')
+    .replace('{{lib:es6:export}}\n', '')
+  ;
+
+  fs.writeFile(`${destination}/${name}.js`, lib, { encoding: 'utf8' }, (err) => {
+    if (err) throw new Error(err);
+
+    const d2 = new Date() - d1;
+    process.stdout.write(`Finished '\x1b[36mdo:umd\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    done();
+  });
+}
+
+/**
+ * Creates one UMD/ES6 library.
+ *
+ * @function (arg1, arg2)
+ * @private
+ * @param {String}          the main file of the library,
+ * @param {Function}        the function to call at the completion,
+ * @returns {}              -,
+ * @since 0.0.0
+ */
+function _doLib(input, done) {
+  const pakket = Pakket(input, { export: exportname, type: 'generic' });
+
+  pakket.get((data) => {
+    const content = data
+      .replace(/{{lib:name}}/g, name)
+      .replace(/{{lib:exportname}}/g, exportname)
+      .replace(/{{lib:version}}/g, version)
+      // Remove extra global.
+      // (keep the first global only)
+      .replace(/\/\* global/, '/* gloobal')
+      .replace(/\/\* global[\w$_\s,]+\*\//g, '/* - */')
+      .replace(/\/\* gloobal/, '/* global')
+      // Remove extra 'use strict'.
+      // (keep the two first only)
+      .replace(/use strict/, 'use_strict')
+      .replace(/use strict/, 'use_strict')
+      .replace(/'use strict';/g, '/* - */')
+      .replace(/use_strict/g, 'use strict')
+    ;
+
+    // For testing purpose:
+    // fs.writeFileSync(`${destination}/${name}-core.js`, src);
+
+    /**
+     * Waits until completion.
+     */
+    let count = 2;
+    function _next() {
+      count -= 1;
+      if (!count) {
+        done();
+      }
+    }
+    _doUMD(content, _next);
+    _doES6(content, _next);
+  });
+}
+
+/**
+ * Creates all UMD/ES6 libraries.
  *
  * @function (arg1)
  * @private
@@ -241,16 +241,20 @@ function _domodule(done) {
  * @returns {}              -,
  * @since 0.0.0
  */
-function _delgeneric(done) {
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mdelgeneric\x1b[89m\x1b[0m\'...\n');
+function _doLibs(done) {
+  let pending = 1;
+  /**
+   * Waits until completion.
+   */
+  function _next() {
+    pending -= 1;
+    if (!pending) {
+      done();
+    }
+  }
 
-  fs.unlink(`${destination}/generic.js`, (err) => {
-    if (err) throw new Error(err);
-
-    const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mdelgeneric\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
-    done();
+  _doLib(source, () => {
+    _next();
   });
 }
 
@@ -266,9 +270,7 @@ function _delgeneric(done) {
  * @returns {}              -,
  * @since 0.0.0
  */
-async function run() {
-  const PENDING = 2;
-
+function run() {
   if (parsed.help) {
     _help();
     return;
@@ -282,24 +284,12 @@ async function run() {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mbuild:js:dev\x1b[89m\x1b[0m\'...\n');
 
-  let pending = PENDING;
-  /**
-   * Executes done until completion.
-   */
-  function done() {
-    pending -= 1;
-    if (!pending) {
-      _delgeneric(() => {
-        const d2 = new Date() - d1;
-        process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
-      });
-    }
-  }
-
-  await _clean();
-  await _dogeneric();
-  _doumdlib(done);
-  _domodule(done);
+  _clean(() => {
+    _doLibs(() => {
+      const d2 = new Date() - d1;
+      process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    });
+  });
 }
 
 

@@ -9,29 +9,28 @@
   "scripts": {
     "general": " --- GENERAL ---",
 
-    "build:js": " --- JAVASCRIPT --- ",
+    "build:js": " --- BUILDING JAVASCRIPT --- ",
     "build:js:dev": "node scripts/build.js.dev.js $1",
     "build:js:prod": "node scripts/build.js.prod.js $1",
 
-    "build:css": " --- CSS --- ",
+    "build:css": " --- BUILDING CSS --- ",
     "build:css:dev": "node scripts/build.css.dev.js $1",
     "build:css:prod": "node scripts/build.css.prod.js $1",
 
-    "import:vendors": "-- VENDORS LIBS & FONTS --",
-    "import:libs": "node scripts/import.libs.js $1",
-    "import:fonts": "node scripts/import.fonts.js $1",
+    "import:vendors": "-- IMPORTING VENDORS LIBS & FONTS --",
+    "import:libs:fonts": "node scripts/import.libs.fonts.js $1",
 
-    "copy:img": "-- IMG & ICONS --",
+    "copy:img": "-- COPYING IMG & ICONS --",
     "build:img:icons": "node scripts/build.img.icons.js $1",
 
-    "build:generic": " --- BUILD (GENERIC) --- ",
-    "build:import:vendors": "npm run import:libs && npm run import:fonts",
+    "build:generic": " --- BUILDING (GENERIC) --- ",
+    "build:import:vendors": "npm run import:libs:fonts",
 
-    "build:development": " --- BUILD (DEVELOPMENT) --- ",
+    "build:development": " --- BUILDING (DEVELOPMENT) --- ",
     "prebuild:dev": "npm run build:import:vendors && npm run build:img:icons",
     "build:dev": "npm run build:js:dev && npm run build:css:dev",
 
-    "build:production": " --- BUILD (PRODUCTION) --- ",
+    "build:production": " --- BUILDING (PRODUCTION) --- ",
     "build:skeleton:prod": "node scripts/build.skeleton.prod.js $1",
     "build:extra:prod": "node scripts/build.extra.prod.js $1",
     "prebuild:prod": "npm run build:dev && npm run build:skeleton:prod && npm run build:extra:prod",
@@ -53,14 +52,13 @@
     "watch:css": "nodemon -e css --watch './public/src/**/*' --exec npm run build:css:dev",
     "watch": "nodemon -e js,mjs,json,css --watch './public/src/**/*' --exec npm run build:js:css:dev",
 
-    "deployment": " --- DEPLOYMENT --- ",
+    "deployment": " --- DEPLOYING --- ",
     "dep:prod": "rm -rf _app-$npm_package_version && npm run build:prod && cp -r _app _app-$npm_package_version",
     "dep:private:package": "npm run build:prod && node scripts/dep.private.js && sh scripts/compress.sh ${npm_package_name} ${npm_package_version} @mobilabs",
-    "dep:npm:private:package": "npm pack && sh scripts/dep.npm.private.sh ${npm_package_name} ${npm_package_version} @mobilabs",
+    "dep:npm:private:package": "npm run build:prod && npm pack && sh scripts/dep.npm.private.sh ${npm_package_name} ${npm_package_version} @mobilabs",
 
     "others": " --- OTHERS ---",
-    "prepare": "husky install",
-    "doc": ""
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -72,7 +70,7 @@
   "author": {
     "name": "Mobilabs",
     "email": "contact@mobilabs.fr",
-    "url": "http://www.mobilabs.fr"
+    "url": "https://www.mobilabs.fr"
   },
   "license": "MIT",
   "bugs": {
@@ -80,7 +78,7 @@
   },
   "homepage": "https://github.com/jclo/pulsar",
   "dependencies": {
-    "@mobilabs/rview": "^1.2.0",
+    "@mobilabs/rview": "^1.2.1",
     "nopt": "^7.2.0",
     "shelljs": "^0.8.5"
   },
@@ -99,9 +97,9 @@
     "jsdom": "23.1.0",
     "mocha": "^8.4.0",
     "nodemon": "^3.0.2",
-    "pakket": "^1.2.0",
+    "pakket": "^1.2.1",
     "terser": "^5.26.0",
-    "@mobilabs/es6pakket": "2.1.0"
+    "@mobilabs/es6pakket": "2.1.1"
   },
   "c8": {
     "include": [

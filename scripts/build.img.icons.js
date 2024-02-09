@@ -10,7 +10,7 @@
  *  . _walk                       returns the list of files in the folder,
  *  . _copy                       copies the matching files in the destination folder,
  *  . _help                       displays the help message,
- *  . _clean                      removes the contents from the previous buiild,
+ *  . _clean                      removes the previous build,
  *  . _cpimg                      copies all the project images in the img folder,
  *  . _cpicons                    copies icons in the img folder,
  *
@@ -32,8 +32,8 @@
 
 // -- Vendor Modules
 const fs   = require('fs')
-    , path = require('path')
     , nopt = require('nopt')
+    , path = require('path')
     ;
 
 
@@ -43,19 +43,19 @@ const config = require('./config')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION     = '0.0.0-alpha.0'
+    , opts        = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts   = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
-    , { imgdir } = config
-    , { img }    = config
-    , { icons }  = config
+    , parsed      = nopt(opts, shortOpts, process.argv, 2)
+    , { imgdir }  = config
+    , { img }     = config
+    , { icons }   = config
     ;
 
 
@@ -195,13 +195,13 @@ function _help() {
 /**
  * Removes the previous build.
  *
- * @function ()
+ * @function ([arg1])
  * @private
- * @param {}                -,
+ * @param {Function}        the function to call at the completion,
  * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
@@ -215,6 +215,7 @@ function _clean() {
         const d2 = new Date() - d1;
         process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
         resolve();
+        if (done) done();
       });
     });
   });
@@ -231,7 +232,7 @@ function _clean() {
  */
 function _cpimg(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcpimg\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mcopy:img\x1b[89m\x1b[0m\'...\n');
 
   /**
    * checks if the passed in file is inside a 'img' folder.
@@ -249,7 +250,7 @@ function _cpimg(done) {
     }
 
     const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mcpimg\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    process.stdout.write(`Finished '\x1b[36mcopy:img\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
     done();
   });
 }
@@ -265,7 +266,7 @@ function _cpimg(done) {
  */
 function _cpicons(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcpicons\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mcopy:icons\x1b[89m\x1b[0m\'...\n');
 
   fs.stat(icons, (err1, stat) => {
     if (stat && stat.isDirectory()) {
@@ -277,7 +278,7 @@ function _cpicons(done) {
     }
 
     const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mcpicons\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    process.stdout.write(`Finished '\x1b[36mcopy:icons\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
     done();
   });
 }

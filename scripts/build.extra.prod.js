@@ -41,18 +41,18 @@ const config = require('./config')
 
 
 // -- Local Constants
-const VERSION = '0.0.0-alpha.0'
-    , opts = {
+const VERSION     = '0.0.0-alpha.0'
+    , opts        = {
       help: [Boolean, false],
       version: [String, null],
     }
-    , shortOpts = {
+    , shortOpts   = {
       h: ['--help'],
       v: ['--version', VERSION],
     }
-    , parsed = nopt(opts, shortOpts, process.argv, 2)
-    , { root } = config
-    , { dist } = config
+    , parsed      = nopt(opts, shortOpts, process.argv, 2)
+    , { root }    = config
+    , { dist }    = config
     ;
 
 
@@ -87,25 +87,27 @@ function _help() {
 }
 
 /**
- * Removes the files from the previous build.
+ * Removes the previous build.
  *
- * @function ()
+ * @function ([arg1])
  * @private
- * @param {}                -,
+ * @param {Function}        the function to call at the completion,
  * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
-function _clean() {
+function _clean(done) {
+  const PENDING = 3;
   const d1 = new Date();
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
-  let pending = 3;
+  let pending = PENDING;
   const _next = function(resolve) {
     pending -= 1;
     if (!pending) {
       const d2 = new Date() - d1;
       process.stdout.write(`Finished '\x1b[36mclean\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
       resolve();
+      if (done) done();
     }
   };
 
@@ -132,13 +134,13 @@ function _clean() {
  *
  * @function (arg1)
  * @private
- * @param {function}        the function to call at the completion,
+ * @param {Function}        the function to call at the completion,
  * @returns {}              -,
  * @since 0.0.0
  */
 function _cpfonts(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcpfonts\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mcopy:fonts\x1b[89m\x1b[0m\'...\n');
 
   fs.cp(`${root}/fonts`, `${dist}/fonts`, { recursive: true }, (err) => {
     let warning = '';
@@ -147,7 +149,7 @@ function _cpfonts(done) {
     }
 
     const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mcpfonts\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
+    process.stdout.write(`Finished '\x1b[36mcopy:fonts\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
     done();
   });
 }
@@ -157,13 +159,13 @@ function _cpfonts(done) {
  *
  * @function (arg1)
  * @private
- * @param {function}        the function to call at the completion,
+ * @param {Function}        the function to call at the completion,
  * @returns {}              -,
  * @since 0.0.0
  */
 function _cpimg(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcpimg\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mcopy:img\x1b[89m\x1b[0m\'...\n');
 
   fs.cp(`${root}/img`, `${dist}/img`, { recursive: true }, (err) => {
     let warning = '';
@@ -172,7 +174,7 @@ function _cpimg(done) {
     }
 
     const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mcpimg\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
+    process.stdout.write(`Finished '\x1b[36mcopy:img\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
     done();
   });
 }
@@ -188,7 +190,7 @@ function _cpimg(done) {
  */
 function _cpvendor(done) {
   const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mcpvendor\x1b[89m\x1b[0m\'...\n');
+  process.stdout.write('Starting \'\x1b[36mcopy:vendor\x1b[89m\x1b[0m\'...\n');
 
   fs.cp(`${root}/vendor`, `${dist}/vendor`, { recursive: true }, (err) => {
     let warning = '';
@@ -197,7 +199,7 @@ function _cpvendor(done) {
     }
 
     const d2 = new Date() - d1;
-    process.stdout.write(`Finished '\x1b[36mcpvendor\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
+    process.stdout.write(`Finished '\x1b[36mcopy:vendor\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m${warning}\n`);
     done();
   });
 }
@@ -242,10 +244,11 @@ async function run() {
     }
   }
 
-  await _clean();
-  _cpfonts(done);
-  _cpimg(done);
-  _cpvendor(done);
+  _clean(() => {
+    _cpfonts(done);
+    _cpimg(done);
+    _cpvendor(done);
+  });
 }
 
 
