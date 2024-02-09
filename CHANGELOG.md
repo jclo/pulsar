@@ -3,7 +3,7 @@
 ### 1.3.1 (February 9, 2024)
 
   * Updated the project with @ES6Pakket 2.1.x (improved build scripts),
-  * ...,
+  * Release.
 
 
 ### 1.3.0 (January 22, 2024)
