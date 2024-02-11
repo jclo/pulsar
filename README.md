@@ -45,38 +45,40 @@ That's almost all! When the script has been executed, your folder contains the f
 Your project Folder
       |_ .github
       |     |_ workflows
-      |           |_ ci.yml   // Github Workflow file (if you use it),
+      |           |_ ci.yml     // Github Workflow file (if you use it),
       |
       |_ public
-      |   |_ ...              // The source files of your library,
-      |   |_ ...
-      |   |_ ...
-      |
-      |_ tasks
-      |   |_ src              // The source files of your project,
+      |   |_ src                // The source files of your app,
+      |   |   |_ main.js
+      |   |   |_ ...
+      |   |
       |   |_ .htaccess
       |   |_ 404.html
-      |   |_ favicon.ico
-      |   |_ index.html       // The entry of your Web App,
-      |   |_ ...  
+      |   |_ index.html
+      |   |_ ...
+      |
+      |_ scripts
+      |   |_ build.js.dev.js    // the scripts to build your app,
+      |   |_ build.css.dev.js
+      |   |_ ...
       |
       |_  test
-      |     |_ main.js        // Your Mocha, Chai test file,
+      |     |_ ...              // Your Mocha, Chai test file,
       |     |_ ...
       |
-      |_ .eslintignore        // Files to be ignored by ESLint,
-      |_ .eslintrc            // A Configuration file for the ESLint linter tool (if you use it),
-      |_ .gitignore           // Files that Git must ignore (if you use git),
-      |_ .npmignore           // Files that Npm must ignore (optional),
-      |_ .CHANGELOG.md        // The changes between your different versions,
-      |_ index.js             // The link to your javascript code,
-      |_ LICENSE.md           // The license that applies to your library (here MIT),
-      |_ package-lock.json    // The NPM dependency tree,
-      |_ package.json         // The NPM package file,
-      |_ README.md            // Your README file,
+      |_ .eslintignore          // Files to be ignored by ESLint,
+      |_ .eslintrc              // A Configuration file for the ESLint linter tool (if you use it),
+      |_ .gitignore             // Files that Git must ignore (if you use git),
+      |_ .npmignore             // Files that Npm must ignore (optional),
+      |_ .CHANGELOG.md          // The changes between your different versions,
+      |_ index.js               // The link to your javascript code,
+      |_ LICENSE.md             // The license that applies to your library (here MIT),
+      |_ package-lock.json      // The NPM dependency tree,
+      |_ package.json           // The NPM package file,
+      |_ README.md              // Your README file,
 ```
 
-And, your browser displays the Web App at the url `http://localhost:8888`.
+And, your browser displays the Web App at the url `http://localhost:8080`.
 
 
 ### How to build it
