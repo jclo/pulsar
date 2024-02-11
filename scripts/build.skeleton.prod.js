@@ -8,7 +8,7 @@
  *
  * Private Functions:
  *  . _help                       displays the help message,
- *  . _clean                      removes the previous production folder,
+ *  . _clean                      removes the previous production build,
  *  . _doskeleton                 creates the production folder and copies files,
  *  . _dowsw                      updates sw.js for production,
  *  . _doindexhtml                updates index.html for production,
@@ -32,8 +32,8 @@
 
 // -- Vendor Modules
 const fs         = require('fs')
-    , nopt       = require('nopt')
     , path       = require('path')
+    , nopt       = require('nopt')
     , { minify } = require('terser')
     ;
 
@@ -94,11 +94,11 @@ function _help() {
 }
 
 /**
- * Removes the previous production folder,
+ * Removes the previous production build.
  *
- * @function ()
+ * @function ([arg1])
  * @private
- * @param {}                -,
+ * @param {Function}        the function to call at the completion,
  * @returns {Object}        returns a promise,
  * @since 0.0.0
  */
@@ -271,56 +271,59 @@ function _doofflinehtml(done) {
 }
 
 
-// -- Main ---------------------------------------------------------------------
+// -- Public Static Methods ----------------------------------------------------
 
-/**
- * Executes the script.
- *
- * @function ()
- * @public
- * @param {}                -,
- * @returns {}              -,
- * @since 0.0.0
- */
-async function run() {
-  const PENDING = 4;
+const Lib = {
 
-  if (parsed.help) {
-    _help();
-    return;
-  }
-
-  if (parsed.version) {
-    process.stdout.write(`version: ${parsed.version}\n`);
-    return;
-  }
-
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mbuild:skeleton:prod\x1b[89m\x1b[0m\'...\n');
-
-  let pending = PENDING;
   /**
-   * Executes done until completion.
-   */
-  function done() {
-    pending -= 1;
-    if (!pending) {
-      const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mbuild:skeleton:prod\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+   * Executes the script.
+   *
+   * @method ()
+   * @public
+   * @param {}                -,
+   * @returns {}              -,
+   * @since 0.0.0
+  */
+  async run() {
+    const PENDING = 4;
+
+    if (parsed.help) {
+      _help();
+      return;
     }
-  }
 
-  _clean(() => {
-    _doskeleton(done);
-    _dosw(done);
-    _doindexhtml(done);
-    _doofflinehtml(done);
-  });
-}
+    if (parsed.version) {
+      process.stdout.write(`version: ${parsed.version}\n`);
+      return;
+    }
+
+    const d1 = new Date();
+    process.stdout.write('Starting \'\x1b[36mbuild:skeleton:prod\x1b[89m\x1b[0m\'...\n');
+
+    let pending = PENDING;
+    /**
+     * Executes done until completion.
+     */
+    function done() {
+      pending -= 1;
+      if (!pending) {
+        const d2 = new Date() - d1;
+        process.stdout.write(`Finished '\x1b[36mbuild:skeleton:prod\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      }
+    }
+
+    _clean(() => {
+      _doskeleton(done);
+      _dosw(done);
+      _doindexhtml(done);
+      _doofflinehtml(done);
+    });
+  },
+};
 
 
-// Start script.
-run();
+// -- Where the script starts --------------------------------------------------
+Lib.run();
 
 
 // -- oOo --

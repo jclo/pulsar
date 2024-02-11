@@ -54,10 +54,11 @@ const VERSION     = '0.0.0-alpha.0'
       v: ['--version', VERSION],
     }
     , parsed      = nopt(opts, shortOpts, process.argv, 2)
-    , destination = config.jsdir
+    , destination = config.libdir
     , { ES6GLOB } = config
     , { source }  = config
     , exportname  = config.export
+    // , { libname } = config
     , { name }    = config
     , { version } = pack
     ;
@@ -96,7 +97,7 @@ function _help() {
 /**
  * Removes the previous build.
  *
- * @function (arg1)
+ * @function ([arg1])
  * @private
  * @param {Function}        the function to call at the completion,
  * @returns {object}        returns a promise,
@@ -259,42 +260,45 @@ function _doLibs(done) {
 }
 
 
-// -- Main ---------------------------------------------------------------------
+// -- Public Static Methods ----------------------------------------------------
 
-/**
- * Executes the script.
- *
- * @function ()
- * @public
- * @param {}                -,
- * @returns {}              -,
- * @since 0.0.0
- */
-function run() {
-  if (parsed.help) {
-    _help();
-    return;
-  }
+const Lib = {
 
-  if (parsed.version) {
-    process.stdout.write(`version: ${parsed.version}\n`);
-    return;
-  }
+  /**
+   * Executes the script.
+   *
+   * @method ()
+   * @public
+   * @param {}                -,
+   * @returns {}              -,
+   * @since 0.0.0
+  */
+  async run() {
+    if (parsed.help) {
+      _help();
+      return;
+    }
 
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mbuild:js:dev\x1b[89m\x1b[0m\'...\n');
+    if (parsed.version) {
+      process.stdout.write(`version: ${parsed.version}\n`);
+      return;
+    }
 
-  _clean(() => {
-    _doLibs(() => {
-      const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+    const d1 = new Date();
+    process.stdout.write('Starting \'\x1b[36mbuild:js:dev\x1b[89m\x1b[0m\'...\n');
+
+    _clean(() => {
+      _doLibs(() => {
+        const d2 = new Date() - d1;
+        process.stdout.write(`Finished '\x1b[36mbuild:js:dev\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      });
     });
-  });
-}
+  },
+};
 
 
-// Start script.
-run();
+// -- Where the script starts --------------------------------------------------
+Lib.run();
 
 
 // -- oOo --

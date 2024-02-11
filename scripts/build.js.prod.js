@@ -55,7 +55,7 @@ const VERSION     = '0.0.0-alpha.0'
     }
     , parsed      = nopt(opts, shortOpts, process.argv, 2)
     , { dist }    = config
-    , libdir      = config.jsdir
+    , { libdir }  = config
     , { name }    = config
     , { license } = config
     ;
@@ -105,10 +105,10 @@ function _clean(done) {
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
   return new Promise((resolve) => {
-    fs.rm(`${dist}/js`, { force: true, recursive: true }, (err1) => {
+    fs.rm(`${dist}/lib`, { force: true, recursive: true }, (err1) => {
       if (err1) throw new Error(err1);
 
-      fs.mkdir(`${dist}/js`, { recursive: true }, (err2) => {
+      fs.mkdir(`${dist}/lib`, { recursive: true }, (err2) => {
         if (err2) throw new Error(err2);
 
         const d2 = new Date() - d1;
@@ -138,7 +138,7 @@ function _copydev(done) {
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/js/${name}.js`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/lib/${name}.js`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
@@ -166,7 +166,7 @@ function _copydevm(done) {
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/js/${name}.mjs`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/lib/${name}.mjs`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
@@ -197,7 +197,7 @@ function _makeminified(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/js/${name}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/lib/${name}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
@@ -229,7 +229,7 @@ function _makeminifiedm(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/js/${name}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/lib/${name}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
@@ -268,52 +268,55 @@ function _doLibs(done) {
 }
 
 
-// -- Main ---------------------------------------------------------------------
+// -- Public Static Methods ----------------------------------------------------
 
-/**
- * Executes the script.
- *
- * @function ()
- * @public
- * @param {}                -,
- * @returns {}              -,
- * @since 0.0.0
- */
-async function run() {
-  const PENDING = 1;
+const Lib = {
 
-  if (parsed.help) {
-    _help();
-    return;
-  }
-
-  if (parsed.version) {
-    process.stdout.write(`version: ${parsed.version}\n`);
-    return;
-  }
-
-  const d1 = new Date();
-  process.stdout.write('Starting \'\x1b[36mbuild:js:prod\x1b[89m\x1b[0m\'...\n');
-
-  let pending = PENDING;
   /**
-   * Executes done until completion.
-   */
-  function done() {
-    pending -= 1;
-    if (!pending) {
-      const d2 = new Date() - d1;
-      process.stdout.write(`Finished '\x1b[36mbuild:js:prod\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+   * Executes the script.
+   *
+   * @method ()
+   * @public
+   * @param {}                -,
+   * @returns {}              -,
+   * @since 0.0.0
+  */
+  async run() {
+    const PENDING = 1;
+
+    if (parsed.help) {
+      _help();
+      return;
     }
-  }
 
-  await _clean();
-  _doLibs(done);
-}
+    if (parsed.version) {
+      process.stdout.write(`version: ${parsed.version}\n`);
+      return;
+    }
+
+    const d1 = new Date();
+    process.stdout.write('Starting \'\x1b[36mbuild:js:prod\x1b[89m\x1b[0m\'...\n');
+
+    let pending = PENDING;
+    /**
+     * Executes done until completion.
+     */
+    function done() {
+      pending -= 1;
+      if (!pending) {
+        const d2 = new Date() - d1;
+        process.stdout.write(`Finished '\x1b[36mbuild:js:prod\x1b[89m\x1b[0m' after \x1b[35m${d2} ms\x1b[89m\x1b[0m\n`);
+      }
+    }
+
+    await _clean();
+    _doLibs(done);
+  },
+};
 
 
-// Start script.
-run();
+// -- Where the script starts --------------------------------------------------
+Lib.run();
 
 
 // -- oOo --

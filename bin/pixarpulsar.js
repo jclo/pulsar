@@ -143,7 +143,7 @@ const changelog = [
 ].join('\n');
 
 const index = [
-  `module.exports = require('${config.root}/js/${config.bundle}');`,
+  `module.exports = require('${config.root}/js/${config.name}');`,
   '',
 ].join('\n');
 
@@ -481,7 +481,7 @@ function _addScripts(source, dest, folder, app, boilerlib) {
  */
 function _addHuskyHook(source, dest, folder) {
   shell.mkdir('-p', `${dest}/${folder}`);
-  shell.cp('-r', `${source}/pre-commit`, `${dest}/${folder}/.`);
+  shell.cp('-r', `${source}/${folder}/pre-commit`, `${dest}/${folder}/.`);
 }
 
 /**
