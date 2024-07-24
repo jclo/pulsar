@@ -1,9 +1,9 @@
 ### HEAD
 
-### 1.4.x (February 11, 2024)
+### 1.4.0 (July 24, 2024)
 
   * Updated the project with @ES6Pakket 2.2.0 (updated dependencies),
-  * ...,
+  * Release.
 
 
 ### 1.3.2 (February 11, 2024)

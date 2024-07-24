@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/pulsar",
-  "version": "1.4.x",
+  "version": "1.4.0",
   "description": "A boilerplate to build complex Web Apps relying on Pakket",
   "main": "",
   "bin": {
