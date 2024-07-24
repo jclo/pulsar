@@ -105,10 +105,10 @@ function _clean(done) {
   process.stdout.write('Starting \'\x1b[36mclean\x1b[89m\x1b[0m\'...\n');
 
   return new Promise((resolve) => {
-    fs.rm(`${dist}/lib`, { force: true, recursive: true }, (err1) => {
+    fs.rm(`${dist}/js`, { force: true, recursive: true }, (err1) => {
       if (err1) throw new Error(err1);
 
-      fs.mkdir(`${dist}/lib`, { recursive: true }, (err2) => {
+      fs.mkdir(`${dist}/js`, { recursive: true }, (err2) => {
         if (err2) throw new Error(err2);
 
         const d2 = new Date() - d1;
@@ -138,7 +138,7 @@ function _copydev(done) {
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/lib/${name}.js`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/js/${name}.js`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
@@ -166,7 +166,7 @@ function _copydevm(done) {
 
     let content = license;
     content += data;
-    fs.writeFile(`${dist}/lib/${name}.mjs`, content, { encoding: 'utf8' }, (err2) => {
+    fs.writeFile(`${dist}/js/${name}.mjs`, content, { encoding: 'utf8' }, (err2) => {
       if (err2) throw new Error(err2);
 
       const d2 = new Date() - d1;
@@ -197,7 +197,7 @@ function _makeminified(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/lib/${name}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/js/${name}.min.js`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;
@@ -229,7 +229,7 @@ function _makeminifiedm(done) {
 
     minify(content, {})
       .then((result) => {
-        fs.writeFile(`${dist}/lib/${name}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
+        fs.writeFile(`${dist}/js/${name}.min.mjs`, result.code, { encoding: 'utf8' }, (err2) => {
           if (err2) throw new Error(err2);
 
           const d2 = new Date() - d1;

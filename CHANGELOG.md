@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.4.x (February 11, 2024)
+
+  * Updated the project with @ES6Pakket 2.2.0 (updated dependencies),
+  * ...,
+
+
 ### 1.3.2 (February 11, 2024)
 
   * Updated the project with @ES6Pakket 2.1.2 (fixed typos in build scripts),
