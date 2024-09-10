@@ -8,8 +8,20 @@
  *  . none,
  *
  *
- * Component's Public Custom Methods:
- *  . render                      returns the XMLString of the component,
+ * Overwritten Public Methods:
+ *  . $init                       performs the public initializations,
+ *  . $listenDOM                  listens for DOM events,
+ *  . $postRender                 performs operations after component added to DOM,
+ *  . $onChange                   performs operations after component updated in DOM,
+ *  . $render                     returns the component XML string,
+ *
+ *
+ * Specific Public Methods:
+ *  . none,
+ *
+ *
+ * Overwritable Public Methods:
+ *  . none,
  *
  *
  *
@@ -43,7 +55,7 @@ const App = RView.Component({
 
   /**
    * Initializes state and props.
-   * (executed before the component is rendered in the DOM)
+   * (performed before the component is rendered in the DOM)
    *
    * @method ()
    * @public
@@ -51,14 +63,14 @@ const App = RView.Component({
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  init() {
+  $init() {
     this.props.hello = '(with Pulsar v{{lib:version}})';
     return this;
   },
 
   /**
-   * Starts DOM events.
-   * (executed after the component is rendered in the DOM)
+   * Listens for DOM events.
+   * (performed after the component is rendered in the DOM)
    *
    * @method ()
    * @public
@@ -66,7 +78,33 @@ const App = RView.Component({
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  events() {
+  $listenDOM() {
+    return this;
+  },
+
+  /**
+   * Performs operations after the component is added to the DOM.
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  $postRender() {
+    return this;
+  },
+
+  /**
+   * Performs operations after the component has been updated in the DOM.
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  $onChange() {
     return this;
   },
 
@@ -79,7 +117,7 @@ const App = RView.Component({
    * @returns {XMLString}   returns the XMLString of the component,
    * @since 0.0.0
    */
-  render(state, props) {
+  $render(state, props) {
     return `
       <div>
         <p style="text-align: center; padding-top: 100px;">

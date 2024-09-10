@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.5.0 (September 10, 2024)
+
+  * Updated the project RView 2.0,
+  * ...,
+
+
 ### 1.4.0 (July 24, 2024)
 
   * Updated the project with @ES6Pakket 2.2.0 (updated dependencies),
