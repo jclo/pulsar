@@ -20,15 +20,15 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-console */
+/* eslint-disable no-console */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import Worker from './worker/main';
-import App from './app/main';
+import Worker from './worker/main.js';
+import App from './app/main.js';
 
 
 // -- Local Constants
@@ -73,4 +73,4 @@ Pulsar();
 // -- Export
 export default Pulsar;
 
-/* eslint-enable one-var, semi-style, no-console */
+/* eslint-enable no-console */

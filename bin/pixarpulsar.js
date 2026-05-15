@@ -8,7 +8,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2024 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr)
+ * Copyright (c) 2026 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,31 +33,34 @@
 
 
 // -- Vendor Modules
-const fs    = require('fs')
-    , nopt  = require('nopt')
-    , path  = require('path')
-    , shell = require('shelljs')
-    ;
+import fs from 'fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import nopt from 'nopt';
+import path from 'path';
+import shell from 'shelljs';
 
 
 // -- Local Modules
-const config = require('../scripts/config');
+import pack from '../package.json' with { type: 'json' };
+import config from '../scripts/config.js';
 
 
 // -- Local Constants
-const defBoilerLib  = require(`${__dirname}/../scripts/config`).libname
-    /* eslint-disable-next-line object-curly-newline */
-    , defAuthor   = { name: 'John Doe', acronym: 'jdo', email: 'jdo@johndoe.com', url: 'http://www.johndoe.com' }
-    , copyright   = `Copyright (c) ${new Date().getFullYear()} {{author:name}} <{{author:email}}> ({{author:url}})`
-    , baseapp     = process.cwd()
-    , baseboiler  = __dirname.replace('/bin', '')
-    , { version } = require('../package.json')
-    , html5       = require('../package.json').devDependencies['html5-boilerplate']
-    , publicdir   = 'public'
-    , test        = 'test'
-    , scripts     = 'scripts'
-    , husky       = '.husky'
-    , docs        = 'docs'
+const defBoilerLib = config.libname
+    , __filename   = fileURLToPath(import.meta.url)
+    , __dirname    = dirname(__filename)
+    , defAuthor    = { name: 'John Doe', acronym: 'jdo', email: 'jdo@johndoe.com', url: 'http://www.johndoe.com' }
+    , copyright    = `Copyright (c) ${new Date().getFullYear()} {{author:name}} <{{author:email}}> ({{author:url}})`
+    , baseapp      = process.cwd()
+    , baseboiler   = __dirname.replace('/bin', '')
+    , { version }  = pack
+    , html5        = pack.devDependencies['html5-boilerplate']
+    , publicdir    = 'public'
+    , test         = 'test'
+    , scripts      = 'scripts'
+    , husky        = '.husky'
+    , docs         = 'docs'
     // Command line Options
     , opts = {
       help: [Boolean, false],
@@ -143,7 +146,8 @@ const changelog = [
 ].join('\n');
 
 const index = [
-  `module.exports = require('${config.root}/js/${config.name}');`,
+  `import Pulsar from '${config.root}/js/${config.name}.mjs';`,
+  'export default Pulsar;',
   '',
 ].join('\n');
 
@@ -262,7 +266,7 @@ function _addSkeleton(base, app, owner, cright) {
   let s;
   for (let i = 0; i < newFiles[0].length; i++) {
     input = newFiles[0][i]
-      .replace('{{lib:name}}', app)
+      .replace(/{{lib:name}}/g, app)
       .replace('{{lib:lowname}}', 'wapp')
       .replace('{{lib:copyright}}', cright)
       .replace('{{author:name}}', owner.name)
@@ -286,7 +290,7 @@ function _addSkeleton(base, app, owner, cright) {
  * @returns {}              -,
  */
 function _duplicate(source, dest) {
-  const dupFiles = ['.eslintrc', 'rmdstore.sh'];
+  const dupFiles = ['eslint.config.js', 'rmdstore.sh'];
 
   for (let i = 0; i < dupFiles.length; i++) {
     process.stdout.write(`  copied ${dupFiles[i]}\n`);
@@ -317,6 +321,7 @@ function _customize(source, dest, app, owner, boilerlib) {
   pack.description = `${app} ...`;
   pack.main = '';
   pack.bin = {};
+  pack.type = 'module';
 
   pack.scripts = obj.scripts;
   pack.scripts['check:coverage'] = 'c8 check-coverage --statements 100 --branches 100 --functions 100 --lines 100';

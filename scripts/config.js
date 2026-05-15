@@ -18,7 +18,7 @@
 
 
 // -- Local Modules
-const pack = require('../package.json');
+import pack from '../package.json' with { type: 'json' };
 
 
 // -- Local Constants
@@ -34,7 +34,7 @@ const libname    = 'Pulsar'
 
 // -- Main
 
-module.exports = {
+export default {
   ES6GLOB: '$__ES6GLOB',
   root: './public',
   dist: './_app',
@@ -102,17 +102,33 @@ module.exports = {
     './public/manifest.json',
   ],
 
-  get license() {
-    return ['/*! ****************************************************************************',
-      ` * ${libname} v${pack.version}`,
-      ' *',
-      ` * ${pack.description}.`,
-      ' * (you can download it from npm or github repositories)',
-      ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
-      ' * Released under the MIT license. You may obtain a copy of the License',
-      ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Pakket v2.2.0 and from {{boiler:name}} v{{boiler:name:version}}.',
-      ' * ************************************************************************** */',
-      ''].join('\n');
+  license: {
+    get js() {
+      return ['/*! ****************************************************************************',
+        ` * ${libname} v${pack.version}`,
+        ' *',
+        ` * ${pack.description}.`,
+        ' * (you can download it from npm or github repositories)',
+        ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
+        ' * Released under the MIT license. You may obtain a copy of the License',
+        ' * at: http://www.opensource.org/licenses/mit-license.php).',
+        ' * Built from ES6Pakket v3.0.0-beta.1.0 and from {{boiler:name}} v{{boiler:name:version}}.',
+        ' * ************************************************************************** */',
+        ''].join('\n');
+    },
+
+    get css() {
+      return ['/*! ****************************************************************************',
+        ` * ${libname} v${pack.version}`,
+        ' *',
+        ` * ${pack.description}.`,
+        ' * (you can download it from npm or github repositories)',
+        ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
+        ' * Released under the MIT license. You may obtain a copy of the License',
+        ' * at: http://www.opensource.org/licenses/mit-license.php).',
+        ' * Built from ES6Pakket v3.0.0-beta.1.0 and from {{boiler:name}} v{{boiler:name:version}}.',
+        ' * ************************************************************************** */',
+        ''].join('\n');
+    },
   },
 };

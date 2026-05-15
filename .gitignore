@@ -21,3 +21,4 @@ public/vendor
 public/src/icons/*
 !public/src/icons/HOW_TO_CREATE_ICONS.md
 public/src/libin
+.npmrc

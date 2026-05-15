@@ -26,22 +26,20 @@
  * @since        0.0.0
  * @version      -
  * ************************************************************************** */
-/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0,
+/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0, curly: 0,
   import/no-extraneous-dependencies: 0 */
 
 
 // -- Vendor Modules
-const fs         = require('fs')
-    , path       = require('path')
-    , nopt       = require('nopt')
-    , { minify } = require('terser')
-    ;
+import fs from 'fs';
+import path from 'path';
+import nopt from 'nopt';
+import { minify } from 'terser';
 
 
 // -- Local Modules
-const config = require('./config')
-    , pack   = require('../package.json')
-    ;
+import config from './config.js';
+import pack from '../package.json' with { type: 'json' };
 
 
 // -- Local Constants

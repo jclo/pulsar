@@ -4,14 +4,12 @@
 
 
 // -- Vendor Modules
-const { JSDOM } = require('jsdom')
-    ;
+import { JSDOM } from 'jsdom';
 
 
 // -- Local Modules
-const testlib = require('./int/lib')
-    , pack    = require('../package.json')
-    ;
+import testlib from './int/lib.js';
+import pack from '../package.json' with { type: 'json' };
 
 
 // -- Local Constants
@@ -22,8 +20,6 @@ const libname = 'Pulsar';
 
 
 // -- Main
-
-// Create a Virtual DOM:
 const HTML = `
   <!DOCTYPE html>
   <html>
@@ -36,7 +32,7 @@ const HTML = `
 const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.document = dom.window.document;
-global.navigator = { userAgent: 'node.js' };
+// global.navigator = { userAgent: 'node.js' };
 
 // Nota:
 // If you want that 'display-coverage' shows the coverage files by files,
@@ -46,11 +42,11 @@ global.navigator = { userAgent: 'node.js' };
 //
 // But, if you want that 'display-coverage' shows the coverage in one file,
 // you should set 'Pulsar' and 'testlib' like this:
-//  . const Pulsar = require('../index');
+//  . import Pulsar from '../index.js';
 //  . testlib(Pulsar, libname, pack.version, 'without new');
 
-const Pulsar = require('../public/src/main').default;
-// const Pulsar = require('../index');
+const Pulsar = (await import('../public/src/main.js')).default;
+// const Pulsar (await import('../index.js')).default;
 
 describe('Test Pulsar:', () => {
   testlib(Pulsar, '{{lib:name}}', '{{lib:version}}', 'without new');

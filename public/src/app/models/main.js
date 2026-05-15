@@ -22,8 +22,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable no-underscore-dangle, no-console */
-
+/* eslint-disable no-console, curly */
 
 // -- Vendor Modules
 
@@ -112,4 +111,4 @@ const Model = {
 // -- Export
 export default Model;
 
-/* eslint-enable no-underscore-dangle, no-console */
+/* eslint-enable no-console, curly */

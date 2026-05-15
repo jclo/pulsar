@@ -1,1 +1,2 @@
-module.exports = require('./public/js/wapp');
+import Pulsar from './public/js/wapp.mjs';
+export default Pulsar;

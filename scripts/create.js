@@ -4,10 +4,9 @@
 
 
 // -- Vendor Modules
-const fs       = require('fs')
-    , readline = require('readline')
-    , shell    = require('shelljs')
-    ;
+import fs from 'fs';
+import readline from 'readline';
+import shell from 'shelljs';
 
 
 // -- Local Modules

@@ -22,19 +22,17 @@
  * @since        0.0.0
  * @version      -
  * ************************************************************************** */
-/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0,
+/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0, curly: 0,
   import/no-extraneous-dependencies: 0 */
 
 
 // -- Vendor Modules
-const fs   = require('fs')
-    , nopt = require('nopt')
-    ;
+import fs from 'fs';
+import nopt from 'nopt';
 
 
 // -- Local Modules
-const config = require('./config')
-    ;
+import config from './config.js';
 
 
 // -- Local Constants

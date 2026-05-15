@@ -22,7 +22,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
@@ -30,8 +30,7 @@ import Vie from '@mobilabs/rview';
 
 
 // -- Local Modules
-import App from '../components/app/main';
-import Model from '../models/main';
+import App from '../components/app/main.js';
 
 
 // -- Local Constants
@@ -87,4 +86,4 @@ const View = {
 // -- Export
 export default View;
 
-/* eslint-enable no-underscore-dangle */
+/* - */

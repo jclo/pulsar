@@ -18,7 +18,6 @@
 !scripts/**/*
 !test/**/*
 
-!.eslintrc
-!gulpfile.js
+!eslint.config.js
 !index.js
 !rmdstore.sh

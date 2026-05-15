@@ -4,8 +4,7 @@
 
 
 // -- Vendor Modules
-const { expect } = require('chai')
-    ;
+import { expect } from 'chai';
 
 
 // -- Local Modules
@@ -22,7 +21,7 @@ const OWNPROPS = 0
 
 
 // -- Main
-module.exports = function(Pulsar/* , libname, version */) {
+export default function(Pulsar/* , libname, version, type */) {
   describe('Pulsar introspection:', () => {
     describe('Test the nature of Pulsar:', () => {
       it('Expects Pulsar to be a function.', () => {

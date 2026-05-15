@@ -33,7 +33,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
@@ -133,4 +133,4 @@ const App = RView.Component({
 // -- Export
 export default App;
 
-/* eslint-enable no-underscore-dangle */
+/* - */

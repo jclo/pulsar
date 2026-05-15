@@ -1,5 +1,17 @@
 ### HEAD
 
+### 3.0.0 (May, 15, 2026)
+
+  * Updated the project to comply with ESM,
+  * ...,
+
+
+### 1.5.x (September 10, 2024)
+
+  * Made a license header for js files and another for css files,
+  * ...,
+
+
 ### 1.5.0 (September 10, 2024)
 
   * Updated the project RView 2.0,

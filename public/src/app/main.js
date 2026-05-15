@@ -22,14 +22,14 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import View from './views/main';
+import View from './views/main.js';
 
 
 // -- Local Constants
@@ -65,4 +65,4 @@ const App = {
 // -- Export
 export default App;
 
-/* eslint-enable no-underscore-dangle */
+/* - */
